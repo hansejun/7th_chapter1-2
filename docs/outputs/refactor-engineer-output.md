@@ -1,64 +1,51 @@
-# REFACTOR 단계 리팩토링 작업 내역 - Cycle 1
+# REFACTOR 단계 리팩토링 작업 내역 - Cycle 2
 
 > **메타데이터**
 >
-> - Agent: refactor-engineer
+> - Agent: tdd-orchestrator (직접 검토)
 > - Status: completed
-> - Timestamp: 2025-10-31T10:26:00Z
-> - Input Source: docs/outputs/green-implementer-output.md (Cycle 1)
-> - Refactored Functions: 1개 (formatDate)
+> - Timestamp: 2025-10-31T04:32:00Z
+> - Input Source: docs/outputs/green-implementer-output.md (Cycle 2)
+> - Refactored Functions: 0개 (리팩토링 불필요)
 > - Refactoring File: src/utils/repeatUtils.ts
-> - Test Results: 126/126 passed (유지)
+> - Test Results: 131/131 passed (유지)
 
 ---
 
 ## 리팩토링 내용
 
-### 1. formatDateToISO 중복 제거
+### shouldSkipDate 함수 검토
 
-**문제점**:
-- `formatDateToISO` 함수와 `formatDate` 함수가 동일한 기능 수행
-- `formatDateToISO`는 `toISOString().split('T')[0]` 사용
-- `formatDate`는 `getFullYear/getMonth/getDate` 사용
-
-**개선**:
-- `formatDateToISO` 함수 제거
-- `generateRepeatInstances`에서 `formatDate` 사용으로 변경
-
-**변경 전**:
+**현재 구현**:
 ```typescript
-function formatDateToISO(date: Date): string {
-  return date.toISOString().split('T')[0];
-}
+export function shouldSkipDate(
+  date: Date,
+  repeatType: string,
+  baseDay: number,
+  baseMonth?: number
+): boolean {
+  // 매월 31일 반복: 정확히 31일이 아니면 건너뜀
+  if (repeatType === 'monthly' && baseDay === 31) {
+    return date.getDate() !== 31;
+  }
 
-export function formatDate(date: Date): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
+  // 매년 2/29 반복: 윤년이 아니거나 29일이 아니면 건너뜀
+  if (repeatType === 'yearly' && baseMonth === 1 && baseDay === 29) {
+    return !isLeapYear(date.getFullYear()) || date.getDate() !== 29;
+  }
 
-// generateRepeatInstances 내부
-date: formatDateToISO(currentDate),
+  return false;
+}
 ```
 
-**변경 후**:
-```typescript
-export function formatDate(date: Date): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
+**검토 결과**:
+1. **코드 복잡도**: 낮음 (간단한 조건문 2개)
+2. **중복 코드**: 없음
+3. **주석**: 명확하고 충분함
+4. **타입 안전성**: 적절함 (repeatType은 string으로 충분)
+5. **성능**: 최적화 불필요 (O(1) 복잡도)
 
-// generateRepeatInstances 내부
-date: formatDate(currentDate),
-```
-
-**효과**:
-- 코드 중복 제거
-- 함수 통일로 유지보수성 향상
-- `toISOString()`의 타임존 이슈 회피 (formatDate는 로컬 시간 사용)
+**결론**: 리팩토링 불필요. 현재 구현이 명확하고 간결함.
 
 ---
 
@@ -72,10 +59,10 @@ pnpm test
 
 **결과**:
 - Test Files: 12 passed (12)
-- Tests: 126 passed (126)
-- Duration: 14.34s
+- Tests: 131 passed (131)
+- Duration: 14.24s
 
-**변경 없음**: 모든 테스트가 리팩토링 전과 동일하게 통과
+**변경 없음**: 리팩토링 없으므로 모든 테스트 유지
 
 ### 린트 검사
 
@@ -89,45 +76,27 @@ pnpm run lint
 
 ---
 
-## 추가 리팩토링 기회 검토
-
-### getDayOfWeek
-- 현재: `return date.getDay();`
-- 검토 결과: 최소 구현으로 충분, 변경 불필요
-
-### isLeapYear
-- 현재: `return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;`
-- 검토 결과: 윤년 로직이 명확하고 간결, 변경 불필요
-
-### generateRepeatInstances
-- 현재: 매일 반복만 구현
-- 검토 결과: 추후 Cycle에서 다른 반복 유형 추가 예정
-
----
-
 ## 완료 확인
 
-- ✅ 모든 테스트 통과 유지 (126/126)
+- ✅ 모든 테스트 통과 유지 (131/131)
 - ✅ 린트 검사 통과 (0 errors)
 - ✅ 타입 체크 통과
-- ✅ 코드 중복 제거 완료
-- ✅ 기능 변경 없음 (리팩토링만 수행)
+- ✅ 리팩토링 검토 완료 (불필요)
+- ✅ 기능 변경 없음
 
 REFACTOR Phase 완료!
 
 ---
 
-## Cycle 1 최종 요약
+## Cycle 2 최종 요약
 
 ### 완료된 작업
-1. **RED**: formatDate, getDayOfWeek, isLeapYear 테스트 작성 (커밋: 87755f8)
-2. **GREEN**: 3개 함수 구현 (커밋: f3bbe0d)
-3. **REFACTOR**: formatDateToISO 중복 제거
+1. **RED**: shouldSkipDate 테스트 작성 (커밋: 11db5c4)
+2. **GREEN**: shouldSkipDate 함수 구현 (커밋: c4e82ef)
+3. **REFACTOR**: 리팩토링 불필요 확인
 
 ### 통과된 테스트
-- formatDate: 3개
-- getDayOfWeek: 3개
-- isLeapYear: 4개
+- shouldSkipDate: 5개
 
 ### 다음 사이클
-Cycle 2: shouldSkipDate 함수 (31일, 윤년 처리)
+Cycle 3: getNextOccurrence 함수 (다음 반복 발생일 계산)
