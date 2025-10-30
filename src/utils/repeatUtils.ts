@@ -44,7 +44,16 @@ export function shouldSkipDate(
   baseDay: number,
   baseMonth?: number
 ): boolean {
-  // TODO: 구현 필요
+  // 매월 31일 반복: 정확히 31일이 아니면 건너뜀
+  if (repeatType === 'monthly' && baseDay === 31) {
+    return date.getDate() !== 31;
+  }
+
+  // 매년 2/29 반복: 윤년이 아니거나 29일이 아니면 건너뜀
+  if (repeatType === 'yearly' && baseMonth === 1 && baseDay === 29) {
+    return !isLeapYear(date.getFullYear()) || date.getDate() !== 29;
+  }
+
   return false;
 }
 
