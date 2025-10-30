@@ -195,15 +195,17 @@ model: sonnet
    - 다음 단계 안내 (다음 RED 사이클 또는 완료)
 
 5. **깃 커밋** ⭐ 필수
+
    ```bash
    git add .
    git commit -m "refactor: [REFACTOR] <작업 내용>"
    ```
+
    - `<작업 내용>`: 수행한 리팩토링의 요약 (예: "dateUtils 함수 추출 및 네이밍 개선")
    - 예시: `refactor: [REFACTOR] dateUtils 중복 제거 및 함수 추출`
    - 예시: `refactor: [REFACTOR] eventForm 컴포넌트 분리 및 네이밍 개선`
    - **모든 테스트가 통과하는 상태에서 커밋**
-   
+
 6. **종료**
 
 # 주요 리팩토링 패턴

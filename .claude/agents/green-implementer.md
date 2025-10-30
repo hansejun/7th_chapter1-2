@@ -232,16 +232,18 @@ pnpm run lint
    - 다음 단계 (REFACTOR) 안내 작성
 
 5. **깃 커밋** ⭐ 필수
+
    ```bash
    git add .
    git commit -m "feat: [GREEN] <scope> <작업 내용>"
    ```
+
    - `<scope>`: 작업한 도메인/기능 영역 (예: dateUtils, eventForm, notifications)
    - `<작업 내용>`: 구현한 내용의 요약 (예: "반복 일정 계산 로직 구현")
    - 예시: `feat: [GREEN] dateUtils 31일 매월 반복 로직 구현`
    - 예시: `feat: [GREEN] eventForm 반복 일정 수정/삭제 기능 구현`
    - **모든 테스트가 통과하는 상태에서 커밋**
-   
+
 6. **종료**
 
 # GREEN 단계 체크리스트

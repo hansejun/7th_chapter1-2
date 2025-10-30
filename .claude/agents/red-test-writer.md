@@ -111,6 +111,7 @@ model: sonnet
     - 린트 오류 발생 시 반드시 수정
     - 통과할 때까지 반복
 11. **파일 인코딩 검증** ⭐ 필수 - UTF-8 확인
+
     ```bash
     file -I docs/outputs/red-test-writer-output.md
     ```
@@ -119,6 +120,7 @@ model: sonnet
     - `charset=binary` 또는 다른 인코딩이면 파일 재작성 필요
     - `.claude/conventions/FILE_OUTPUT_RULES.md` 참조
     - UTF-8 확인 후 다음 단계로
+
 12. **Edit `docs/outputs/red-test-writer-output.md`** ⭐ 필수 - 매 테스트마다 업데이트
     - **메타데이터 섹션 업데이트**:
       - Completed Tests 카운트 증가 (M → M+1)
@@ -157,6 +159,7 @@ model: sonnet
    - 다음 단계 (GREEN) 안내 작성
 
 5. **깃 커밋** ⭐ 필수
+
    ```bash
    git add .
    git commit -m "feat: [RED] <scope> <작업 내용>"
@@ -167,6 +170,7 @@ model: sonnet
    - 예시: `feat: [RED] dateUtils 31일 매월 반복 테스트 추가`
    - 예시: `feat: [RED] eventForm 반복 일정 수정/삭제 테스트 추가`
    - **모든 테스트가 의도적으로 실패하는 상태에서 커밋**
+
 6. **종료**
 
 # RED 단계 체크리스트
