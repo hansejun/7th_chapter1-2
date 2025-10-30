@@ -112,7 +112,54 @@ function App() {
   const [isOverlapDialogOpen, setIsOverlapDialogOpen] = useState(false);
   const [overlappingEvents, setOverlappingEvents] = useState<Event[]>([]);
 
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [selectedEventForDialog, setSelectedEventForDialog] = useState<Event | null>(null);
+
   const { enqueueSnackbar } = useSnackbar();
+
+  const handleEditSingle = () => {
+    if (selectedEventForDialog) {
+      setIsEditDialogOpen(false);
+      // 단일 수정: repeat.type을 'none'으로 변경하여 editEvent 호출
+      editEvent({
+        ...selectedEventForDialog,
+        repeat: {
+          type: 'none',
+          interval: 1,
+          endDate: '2025-12-31',
+        },
+      });
+      setSelectedEventForDialog(null);
+    }
+  };
+
+  const handleEditAll = () => {
+    if (selectedEventForDialog) {
+      setIsEditDialogOpen(false);
+      // 전체 수정: 그대로 editEvent 호출
+      editEvent(selectedEventForDialog);
+      setSelectedEventForDialog(null);
+    }
+  };
+
+  const handleDeleteSingle = () => {
+    if (selectedEventForDialog) {
+      // 단일 삭제
+      deleteEvent(selectedEventForDialog.id);
+      setIsDeleteDialogOpen(false);
+      setSelectedEventForDialog(null);
+    }
+  };
+
+  const handleDeleteAll = () => {
+    if (selectedEventForDialog && selectedEventForDialog.repeat.id) {
+      // 전체 삭제: repeatId로 모든 이벤트 삭제
+      // TODO: Cycle 9에서 구현
+      setIsDeleteDialogOpen(false);
+      setSelectedEventForDialog(null);
+    }
+  };
 
   const addOrUpdateEvent = async () => {
     if (!title || !date || !startTime || !endTime) {
@@ -602,10 +649,30 @@ function App() {
                     </Typography>
                   </Stack>
                   <Stack>
-                    <IconButton aria-label="Edit event" onClick={() => editEvent(event)}>
+                    <IconButton
+                      aria-label="Edit event"
+                      onClick={() => {
+                        if (event.repeat.type !== 'none') {
+                          setSelectedEventForDialog(event);
+                          setIsEditDialogOpen(true);
+                        } else {
+                          editEvent(event);
+                        }
+                      }}
+                    >
                       <Edit />
                     </IconButton>
-                    <IconButton aria-label="Delete event" onClick={() => deleteEvent(event.id)}>
+                    <IconButton
+                      aria-label="Delete event"
+                      onClick={() => {
+                        if (event.repeat.type !== 'none') {
+                          setSelectedEventForDialog(event);
+                          setIsDeleteDialogOpen(true);
+                        } else {
+                          deleteEvent(event.id);
+                        }
+                      }}
+                    >
                       <Delete />
                     </IconButton>
                   </Stack>
@@ -654,6 +721,32 @@ function App() {
             }}
           >
             계속 진행
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={isEditDialogOpen} onClose={() => setIsEditDialogOpen(false)}>
+        <DialogTitle>반복 일정 수정</DialogTitle>
+        <DialogContent>
+          <DialogContentText>해당 일정만 수정하시겠어요?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleEditSingle}>예</Button>
+          <Button onClick={handleEditAll}>아니오</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={isDeleteDialogOpen} onClose={() => setIsDeleteDialogOpen(false)}>
+        <DialogTitle>반복 일정 삭제</DialogTitle>
+        <DialogContent>
+          <DialogContentText>해당 일정만 삭제하시겠어요?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteSingle} color="error">
+            예
+          </Button>
+          <Button onClick={handleDeleteAll} color="error">
+            아니오
           </Button>
         </DialogActions>
       </Dialog>

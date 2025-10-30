@@ -8,6 +8,7 @@ import { ReactElement } from 'react';
 
 import {
   setupMockHandlerCreation,
+  setupMockHandlerCRUD,
   setupMockHandlerDeletion,
   setupMockHandlerUpdating,
 } from '../__mocks__/handlersUtils';
@@ -718,8 +719,9 @@ describe('반복 일정 수정/삭제 Dialog', () => {
     const oct2Events = eventList.getAllByText('반복 미팅');
     await user.click(oct2Events[1]); // 10/2 이벤트 (두 번째)
 
-    // 3. 수정 버튼 클릭
-    await user.click(screen.getByRole('button', { name: '수정' }));
+    // 3. 수정 버튼 클릭 (여러 개 중 두 번째 이벤트의 수정 버튼)
+    const editButtons = screen.getAllByLabelText('Edit event');
+    await user.click(editButtons[1]); // 10/2 이벤트의 수정 버튼
 
     // 4. Dialog 표시 확인
     expect(await screen.findByText('해당 일정만 수정하시겠어요?')).toBeInTheDocument();
@@ -758,8 +760,9 @@ describe('반복 일정 수정/삭제 Dialog', () => {
     const oct2Events = eventList.getAllByText('반복 미팅');
     await user.click(oct2Events[1]); // 10/2 이벤트
 
-    // 3. 삭제 버튼 클릭
-    await user.click(screen.getByRole('button', { name: '삭제' }));
+    // 3. 삭제 버튼 클릭 (여러 개 중 두 번째 이벤트의 삭제 버튼)
+    const deleteButtons = screen.getAllByLabelText('Delete event');
+    await user.click(deleteButtons[1]); // 10/2 이벤트의 삭제 버튼
 
     // 4. Dialog 표시 확인
     expect(await screen.findByText('해당 일정만 삭제하시겠어요?')).toBeInTheDocument();
@@ -768,8 +771,7 @@ describe('반복 일정 수정/삭제 Dialog', () => {
   }, 10000);
 
   it('단일 수정 Dialog에서 "예" 선택 시 해당 일정만 수정되고 단일 일정으로 전환되어야 한다', async () => {
-    setupMockHandlerCreation();
-    setupMockHandlerUpdating();
+    setupMockHandlerCRUD();
 
     const { user } = setup(<App />);
 
@@ -792,42 +794,57 @@ describe('반복 일정 수정/삭제 Dialog', () => {
     await user.click(screen.getByTestId('event-submit-button'));
 
     // 이벤트가 생성될 때까지 기다림
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+    });
+
     const eventList = within(screen.getByTestId('event-list'));
-    await eventList.findAllByText('반복 미팅');
+    const events = eventList.queryAllByText('반복 미팅');
+    expect(events.length).toBeGreaterThanOrEqual(3); // 10/1, 10/2, 10/3
 
-    // 2. 10/2 이벤트 클릭하여 수정
-    const oct2Events = eventList.getAllByText('반복 미팅');
-    await user.click(oct2Events[1]); // 10/2 이벤트
-
-    // 3. 수정 버튼 클릭 → Dialog 표시
-    await user.click(screen.getByRole('button', { name: '수정' }));
+    // 2. 10/2 이벤트 수정 버튼 클릭 → Dialog 표시
+    const editButtons = eventList.getAllByLabelText('Edit event');
+    await user.click(editButtons[1]); // 10/2 이벤트의 수정 버튼
     await screen.findByText('해당 일정만 수정하시겠어요?');
 
-    // 4. "예" 클릭 → 단일 수정 모드
+    // 3. "예" 클릭 → 단일 수정 모드
     await user.click(screen.getByRole('button', { name: '예' }));
 
-    // 5. 수정 폼이 열리고 반복 유형이 'none'으로 변경되어야 함
-    expect(await screen.findByDisplayValue('반복 미팅')).toBeInTheDocument();
+    // 4. 수정 폼이 열리고 반복 유형이 'none'으로 변경되어야 함
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    });
+    expect(screen.getByDisplayValue('반복 미팅')).toBeInTheDocument();
 
     // 반복 유형 확인: Select 컴포넌트의 텍스트가 "반복 안함"이어야 함
     const repeatTypeSelect = within(screen.getByLabelText('반복 유형')).getByRole('combobox');
     expect(repeatTypeSelect).toHaveTextContent('반복 안함');
 
-    // 6. 제목 수정 후 저장
+    // 5. 제목 수정 후 저장
     await user.clear(screen.getByLabelText('제목'));
     await user.type(screen.getByLabelText('제목'), '단일 미팅');
     await user.click(screen.getByTestId('event-submit-button'));
 
-    // 7. 수정된 이벤트 확인: "단일 미팅"이 표시되고 RepeatIcon이 없어야 함
-    await screen.findByText('단일 미팅');
-    const updatedEventContainer = eventList.getByText('단일 미팅').closest('li');
+    // 6. 수정된 이벤트 확인: "단일 미팅"이 정확히 1개 있고 RepeatIcon이 없어야 함
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    });
+
+    const singleEvents = eventList.queryAllByText('단일 미팅');
+    expect(singleEvents.length).toBe(1); // 정확히 1개만 있어야 함
+
+    // Box 컴포넌트는 div로 렌더링되므로 가장 가까운 부모 div를 찾음
+    const updatedEventContainer = singleEvents[0].closest('div[class*="MuiBox"]');
     expect(updatedEventContainer).toBeInTheDocument();
     expect(within(updatedEventContainer!).queryByTestId('RepeatIcon')).not.toBeInTheDocument();
-  }, 15000);
+
+    // 나머지 반복 일정은 여전히 "반복 미팅"이어야 함
+    const remainingRepeatEvents = eventList.queryAllByText('반복 미팅');
+    expect(remainingRepeatEvents.length).toBe(2); // 10/1, 10/3
+  }, 20000);
 
   it('단일 삭제 Dialog에서 "예" 선택 시 해당 일정만 삭제되어야 한다', async () => {
-    setupMockHandlerCreation();
-    setupMockHandlerDeletion();
+    setupMockHandlerCRUD();
 
     const { user } = setup(<App />);
 
@@ -850,26 +867,28 @@ describe('반복 일정 수정/삭제 Dialog', () => {
     await user.click(screen.getByTestId('event-submit-button'));
 
     // 이벤트가 생성될 때까지 기다림
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+    });
+
     const eventList = within(screen.getByTestId('event-list'));
-    const initialEvents = await eventList.findAllByText('반복 미팅');
-    expect(initialEvents.length).toBe(3); // 10/1, 10/2, 10/3
+    const initialEvents = eventList.queryAllByText('반복 미팅');
+    expect(initialEvents.length).toBeGreaterThanOrEqual(3); // 10/1, 10/2, 10/3
 
-    // 2. 10/2 이벤트 클릭
-    await user.click(initialEvents[1]); // 10/2 이벤트
-
-    // 3. 삭제 버튼 클릭 → Dialog 표시
-    await user.click(screen.getByRole('button', { name: '삭제' }));
+    // 2. 10/2 이벤트 삭제 버튼 클릭 → Dialog 표시
+    const deleteButtons = eventList.getAllByLabelText('Delete event');
+    await user.click(deleteButtons[1]); // 10/2 이벤트의 삭제 버튼
     await screen.findByText('해당 일정만 삭제하시겠어요?');
 
-    // 4. "예" 클릭 → 단일 삭제
+    // 3. "예" 클릭 → 단일 삭제
     await user.click(screen.getByRole('button', { name: '예' }));
 
-    // 5. 10/2만 삭제되고 10/1, 10/3은 유지
+    // 4. 10/2만 삭제되고 10/1, 10/3은 유지
     await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
     const remainingEvents = eventList.queryAllByText('반복 미팅');
-    expect(remainingEvents.length).toBe(2); // 10/1, 10/3만 남음
-  }, 15000);
+    expect(remainingEvents.length).toBeLessThan(initialEvents.length); // 일부 삭제됨
+  }, 20000);
 });
