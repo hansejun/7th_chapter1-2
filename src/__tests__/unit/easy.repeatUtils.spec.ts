@@ -1,8 +1,9 @@
 import { describe, it, expect } from 'vitest';
 
-import { Event, RepeatType } from '../../types';
+import { Event, EventForm, RepeatType } from '../../types';
 import {
   generateRepeatInstances,
+  generateRecurringInstances,
   formatDate,
   getDayOfWeek,
   isLeapYear,
@@ -380,5 +381,288 @@ describe('getNextOccurrence', () => {
 
     // Assert
     expect(nextDate).toBeNull();
+  });
+});
+
+describe('generateRecurringInstances', () => {
+  it('매일 반복 (3일)', () => {
+    // Arrange
+    const eventForm: EventForm = {
+      title: '매일 회의',
+      date: '2025-01-01',
+      startTime: '10:00',
+      endTime: '11:00',
+      description: '매일 반복',
+      location: '회의실',
+      category: '업무',
+      repeat: {
+        type: 'daily',
+        interval: 1,
+        endDate: '2025-01-03',
+      },
+      notificationTime: 10,
+    };
+
+    // Act
+    const instances = generateRecurringInstances(eventForm, '2025-01-03');
+
+    // Assert
+    expect(instances).toHaveLength(3);
+    expect(instances[0].date).toBe('2025-01-01');
+    expect(instances[1].date).toBe('2025-01-02');
+    expect(instances[2].date).toBe('2025-01-03');
+  });
+
+  it('매일 반복 (10일)', () => {
+    // Arrange
+    const eventForm: EventForm = {
+      title: '매일 회의',
+      date: '2025-01-01',
+      startTime: '10:00',
+      endTime: '11:00',
+      description: '매일 반복',
+      location: '회의실',
+      category: '업무',
+      repeat: {
+        type: 'daily',
+        interval: 1,
+        endDate: '2025-01-10',
+      },
+      notificationTime: 10,
+    };
+
+    // Act
+    const instances = generateRecurringInstances(eventForm, '2025-01-10');
+
+    // Assert
+    expect(instances).toHaveLength(10);
+    expect(instances[0].date).toBe('2025-01-01');
+    expect(instances[9].date).toBe('2025-01-10');
+  });
+
+  it('매주 반복 (월요일)', () => {
+    // Arrange
+    const eventForm: EventForm = {
+      title: '주간 회의',
+      date: '2025-01-06', // 월요일
+      startTime: '10:00',
+      endTime: '11:00',
+      description: '매주 반복',
+      location: '회의실',
+      category: '업무',
+      repeat: {
+        type: 'weekly',
+        interval: 1,
+        endDate: '2025-01-31',
+      },
+      notificationTime: 10,
+    };
+
+    // Act
+    const instances = generateRecurringInstances(eventForm, '2025-01-31');
+
+    // Assert
+    expect(instances).toHaveLength(4);
+    expect(instances[0].date).toBe('2025-01-06');
+    expect(instances[1].date).toBe('2025-01-13');
+    expect(instances[2].date).toBe('2025-01-20');
+    expect(instances[3].date).toBe('2025-01-27');
+  });
+
+  it('매월 반복 (15일)', () => {
+    // Arrange
+    const eventForm: EventForm = {
+      title: '월간 회의',
+      date: '2025-01-15',
+      startTime: '10:00',
+      endTime: '11:00',
+      description: '매월 반복',
+      location: '회의실',
+      category: '업무',
+      repeat: {
+        type: 'monthly',
+        interval: 1,
+        endDate: '2025-05-31',
+      },
+      notificationTime: 10,
+    };
+
+    // Act
+    const instances = generateRecurringInstances(eventForm, '2025-05-31');
+
+    // Assert
+    expect(instances).toHaveLength(5);
+    expect(instances[0].date).toBe('2025-01-15');
+    expect(instances[1].date).toBe('2025-02-15');
+    expect(instances[2].date).toBe('2025-03-15');
+    expect(instances[3].date).toBe('2025-04-15');
+    expect(instances[4].date).toBe('2025-05-15');
+  });
+
+  it('매월 31일 반복 (건너뛰기)', () => {
+    // Arrange
+    const eventForm: EventForm = {
+      title: '31일 회의',
+      date: '2025-01-31',
+      startTime: '10:00',
+      endTime: '11:00',
+      description: '매월 31일 반복',
+      location: '회의실',
+      category: '업무',
+      repeat: {
+        type: 'monthly',
+        interval: 1,
+        endDate: '2025-05-31',
+      },
+      notificationTime: 10,
+    };
+
+    // Act
+    const instances = generateRecurringInstances(eventForm, '2025-05-31');
+
+    // Assert
+    expect(instances).toHaveLength(3); // 1/31, 3/31, 5/31 (2월/4월 건너뜀)
+    expect(instances[0].date).toBe('2025-01-31');
+    expect(instances[1].date).toBe('2025-03-31');
+    expect(instances[2].date).toBe('2025-05-31');
+  });
+
+  it('매년 반복 (같은 해)', () => {
+    // Arrange
+    const eventForm: EventForm = {
+      title: '연간 회의',
+      date: '2025-01-15',
+      startTime: '10:00',
+      endTime: '11:00',
+      description: '매년 반복',
+      location: '회의실',
+      category: '업무',
+      repeat: {
+        type: 'yearly',
+        interval: 1,
+        endDate: '2025-12-31',
+      },
+      notificationTime: 10,
+    };
+
+    // Act
+    const instances = generateRecurringInstances(eventForm, '2025-12-31');
+
+    // Assert
+    expect(instances).toHaveLength(1); // 같은 해라서 1개만
+    expect(instances[0].date).toBe('2025-01-15');
+  });
+
+  it('반복 간격 2 (매일)', () => {
+    // Arrange
+    const eventForm: EventForm = {
+      title: '격일 회의',
+      date: '2025-01-01',
+      startTime: '10:00',
+      endTime: '11:00',
+      description: '2일마다 반복',
+      location: '회의실',
+      category: '업무',
+      repeat: {
+        type: 'daily',
+        interval: 2,
+        endDate: '2025-01-10',
+      },
+      notificationTime: 10,
+    };
+
+    // Act
+    const instances = generateRecurringInstances(eventForm, '2025-01-10');
+
+    // Assert
+    expect(instances).toHaveLength(5);
+    expect(instances[0].date).toBe('2025-01-01');
+    expect(instances[1].date).toBe('2025-01-03');
+    expect(instances[2].date).toBe('2025-01-05');
+    expect(instances[3].date).toBe('2025-01-07');
+    expect(instances[4].date).toBe('2025-01-09');
+  });
+
+  it('반복 간격 2 (매주)', () => {
+    // Arrange
+    const eventForm: EventForm = {
+      title: '격주 회의',
+      date: '2025-01-06', // 월요일
+      startTime: '10:00',
+      endTime: '11:00',
+      description: '2주마다 반복',
+      location: '회의실',
+      category: '업무',
+      repeat: {
+        type: 'weekly',
+        interval: 2,
+        endDate: '2025-03-31',
+      },
+      notificationTime: 10,
+    };
+
+    // Act
+    const instances = generateRecurringInstances(eventForm, '2025-03-31');
+
+    // Assert
+    expect(instances).toHaveLength(7);
+    expect(instances[0].date).toBe('2025-01-06');
+    expect(instances[1].date).toBe('2025-01-20');
+    expect(instances[2].date).toBe('2025-02-03');
+    expect(instances[3].date).toBe('2025-02-17');
+    expect(instances[4].date).toBe('2025-03-03');
+    expect(instances[5].date).toBe('2025-03-17');
+    expect(instances[6].date).toBe('2025-03-31');
+  });
+
+  it('첫 이벤트만 (종료일 = 시작일)', () => {
+    // Arrange
+    const eventForm: EventForm = {
+      title: '단일 회의',
+      date: '2025-12-31',
+      startTime: '10:00',
+      endTime: '11:00',
+      description: '하루만',
+      location: '회의실',
+      category: '업무',
+      repeat: {
+        type: 'daily',
+        interval: 1,
+        endDate: '2025-12-31',
+      },
+      notificationTime: 10,
+    };
+
+    // Act
+    const instances = generateRecurringInstances(eventForm, '2025-12-31');
+
+    // Assert
+    expect(instances).toHaveLength(1);
+    expect(instances[0].date).toBe('2025-12-31');
+  });
+
+  it('반복 유형 none', () => {
+    // Arrange
+    const eventForm: EventForm = {
+      title: '단일 회의',
+      date: '2025-01-01',
+      startTime: '10:00',
+      endTime: '11:00',
+      description: '반복 없음',
+      location: '회의실',
+      category: '업무',
+      repeat: {
+        type: 'none',
+        interval: 1,
+      },
+      notificationTime: 10,
+    };
+
+    // Act
+    const instances = generateRecurringInstances(eventForm, '2025-12-31');
+
+    // Assert
+    expect(instances).toHaveLength(1);
+    expect(instances[0].date).toBe('2025-01-01');
   });
 });

@@ -1,10 +1,10 @@
-# RED Test Writer Input - Cycle 2
+# RED Test Writer Input - Cycle 4
 
 > **메타데이터**
-> - Cycle: 2/10
-> - Feature: shouldSkipDate 함수
+> - Cycle: 4/10
+> - Feature: generateRecurringInstances 함수
 > - Agent: tdd-orchestrator → red-test-writer
-> - Timestamp: 2025-10-31T04:30:00Z
+> - Timestamp: 2025-10-31T10:45:00Z
 
 ## 작업 지시
 
@@ -13,53 +13,75 @@
 ### 구현 대상 함수
 
 ```typescript
-function shouldSkipDate(
-  date: Date,
-  repeatType: RepeatType,
-  baseDay: number,
-  baseMonth?: number
-): boolean
+function generateRecurringInstances(
+  eventForm: EventForm,
+  endDate: string
+): Omit<Event, 'id'>[]
 ```
 
 ### 함수 목적
 
-특정 날짜가 반복 규칙에 따라 건너뛰어야 하는지 판단합니다.
+반복 일정의 모든 인스턴스를 생성합니다.
+
+### 입력
+- `eventForm: EventForm` - 사용자 입력 (date, repeat.type, repeat.interval 포함)
+- `endDate: string` - 반복 종료 날짜 (YYYY-MM-DD, 최대 2025-12-31)
+
+### 출력
+- `Omit<Event, 'id'>[]` - 개별 이벤트 배열 (id 제외)
 
 ### 로직 명세
 
-```typescript
-if (repeatType === 'monthly' && baseDay === 31) {
-  return date.getDate() !== 31;
-}
-
-if (repeatType === 'yearly' && baseMonth === 1 && baseDay === 29) {
-  return !isLeapYear(date.getFullYear()) || date.getDate() !== 29;
-}
-
-return false;
-```
+1. `baseDate` 파싱 (eventForm.date)
+2. 첫 이벤트 무조건 추가
+3. while 루프:
+   - `getNextOccurrence`로 다음 날짜 계산
+   - 종료일 초과 시 break
+   - `shouldSkipDate`로 건너뛰기 체크
+   - 유효하면 instances에 추가
+4. instances 반환
 
 ### 테스트 시나리오 (spec-analyzer-output.md 기반)
 
-1. **2월 28일은 건너뜀 (매월 31일 반복)**
-   - Input: `new Date('2025-02-28'), 'monthly', 31`
-   - Expected: `true`
+1. **매일 반복 (3일)**
+   - 입력: 2025-01-01, 매일 간격 1, 종료 2025-01-03
+   - 출력: [2025-01-01, 2025-01-02, 2025-01-03] (3개)
 
-2. **3월 31일은 생성 (매월 31일 반복)**
-   - Input: `new Date('2025-03-31'), 'monthly', 31`
-   - Expected: `false`
+2. **매일 반복 (10일)**
+   - 입력: 2025-01-01, 매일 간격 1, 종료 2025-01-10
+   - 출력: 1/1 ~ 1/10 (10개)
 
-3. **평년 2/28은 건너뜀 (매년 2/29 반복)**
-   - Input: `new Date('2025-02-28'), 'yearly', 29, 1`
-   - Expected: `true`
+3. **매주 반복 (월요일)**
+   - 입력: 2025-01-06(월), 매주 간격 1, 종료 2025-01-31
+   - 출력: [1/6, 1/13, 1/20, 1/27] (4개, 모두 월요일)
 
-4. **윤년 2/29는 생성 (매년 2/29 반복)**
-   - Input: `new Date('2024-02-29'), 'yearly', 29, 1`
-   - Expected: `false`
+4. **매월 반복 (15일)**
+   - 입력: 2025-01-15, 매월 간격 1, 종료 2025-05-31
+   - 출력: [1/15, 2/15, 3/15, 4/15, 5/15] (5개)
 
-5. **일반 날짜는 건너뛰지 않음**
-   - Input: `new Date('2025-01-15'), 'daily', 15`
-   - Expected: `false`
+5. **매월 31일 반복 (건너뛰기)**
+   - 입력: 2025-01-31, 매월 간격 1, 종료 2025-05-31
+   - 출력: [1/31, 3/31, 5/31] (3개, 2월/4월 건너뜀)
+
+6. **매년 반복**
+   - 입력: 2025-01-15, 매년 간격 1, 종료 2025-12-31
+   - 출력: [2025-01-15] (1개, 같은 해라서)
+
+7. **반복 간격 2 (매일)**
+   - 입력: 2025-01-01, 매일 간격 2, 종료 2025-01-10
+   - 출력: [1/1, 1/3, 1/5, 1/7, 1/9] (5개)
+
+8. **반복 간격 2 (매주)**
+   - 입력: 2025-01-06(월), 매주 간격 2, 종료 2025-03-31
+   - 출력: [1/6, 1/20, 2/3, 2/17, 3/3, 3/17, 3/31] (7개)
+
+9. **첫 이벤트만 (종료일 = 시작일)**
+   - 입력: 2025-12-31, 매일 간격 1, 종료 2025-12-31
+   - 출력: [12/31] (1개)
+
+10. **반복 유형 'none'**
+    - 입력: 2025-01-01, none
+    - 출력: [2025-01-01] (1개)
 
 ### 파일 위치
 
@@ -69,11 +91,11 @@ return false;
 ### 요구사항
 
 - ✅ 테스트는 Assertion 기반 실패여야 함 (미구현으로 인한)
-- ✅ Baseline(126) 대비 실패 수 +1 이상 증가
+- ✅ Baseline(142) 대비 실패 수 +10 이상 증가
 - ✅ 모든 시나리오를 단일 describe 블록에 작성
-- ✅ 의존성 함수: `isLeapYear` (이미 구현됨)
+- ✅ 의존성 함수: `getNextOccurrence`, `shouldSkipDate`, `formatDate` (모두 구현됨)
 
 ### 베이스라인
 
-- 현재 통과 테스트: 126개
+- 현재 통과 테스트: 142개
 - 현재 실패 테스트: 0개
