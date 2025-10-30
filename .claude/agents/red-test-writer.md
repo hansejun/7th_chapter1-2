@@ -114,15 +114,26 @@ model: sonnet
     ```bash
     file -I docs/outputs/red-test-writer-output.md
     ```
+
     - 출력에 `charset=utf-8` 포함 확인
     - `charset=binary` 또는 다른 인코딩이면 파일 재작성 필요
     - `.claude/conventions/FILE_OUTPUT_RULES.md` 참조
     - UTF-8 확인 후 다음 단계로
-12. **Edit `docs/outputs/red-test-writer-output.md`**:
-    - 체크리스트에서 해당 항목을 `[ ]` → `[x]` 변경
-    - 새 섹션 추가 (테스트 코드, 실패 이유, GREEN 가이드)
-    - Completed 카운트 증가
-    - 앵커 링크 추가 (체크리스트 → 상세 섹션)
+12. **Edit `docs/outputs/red-test-writer-output.md`** ⭐ 필수 - 매 테스트마다 업데이트
+    - **메타데이터 섹션 업데이트**:
+      - Completed Tests 카운트 증가 (M → M+1)
+      - Progress 퍼센트 업데이트
+      - Timestamp 갱신
+    - **체크리스트 섹션 업데이트**:
+      - 해당 항목을 `[ ]` → `[x]` 변경
+      - 카테고리별 완료 카운트 업데이트 (M/N)
+      - 전체 진행 상황 업데이트
+    - **새 섹션 추가** (해당 테스트의 상세 내용):
+      - 앵커 ID 추가 (예: `<a id="a-1"></a>`)
+      - 테스트 코드
+      - 실패 이유
+      - GREEN 가이드
+    - **파일 저장 및 검증 확인**
 13. **다음 항목으로 반복** (모든 항목 완료까지)
 
 **중요**: 구현/리팩토링/최적화/커밋은 절대 하지 않는다 (GREEN/REFACTOR 단계 담당)
@@ -144,7 +155,19 @@ model: sonnet
 4. **완료 보고**
    - Status를 "completed"로 변경
    - 다음 단계 (GREEN) 안내 작성
-   - 종료
+
+5. **깃 커밋** ⭐ 필수
+   ```bash
+   git add .
+   git commit -m "feat: [RED] <scope> <작업 내용>"
+   ```
+
+   - `<scope>`: 작업한 도메인/기능 영역 (예: dateUtils, eventForm, notifications)
+   - `<작업 내용>`: 작성한 테스트들의 요약 (예: "반복 일정 계산 테스트 추가")
+   - 예시: `feat: [RED] dateUtils 31일 매월 반복 테스트 추가`
+   - 예시: `feat: [RED] eventForm 반복 일정 수정/삭제 테스트 추가`
+   - **모든 테스트가 의도적으로 실패하는 상태에서 커밋**
+6. **종료**
 
 # RED 단계 체크리스트
 
@@ -203,8 +226,11 @@ model: sonnet
 
 ## 작업 진행 중 ⭐ 신규
 
-- [ ] 각 테스트 작성 후 체크리스트에서 해당 항목 `[x]` 표시
-- [ ] Completed 카운트 업데이트
+- [ ] **각 테스트 작성 후 red-test-writer-output.md 즉시 업데이트** ⭐ 최우선
+  - [ ] 메타데이터 섹션 업데이트 (Completed, Progress, Timestamp)
+  - [ ] 체크리스트에서 해당 항목 `[x]` 표시
+  - [ ] 카테고리별 완료 카운트 업데이트
+  - [ ] 해당 테스트의 상세 섹션 추가 (앵커 링크 포함)
 - [ ] 다음 미완료 항목 선택 및 반복
 
 ## 최종 점검 (Critical)
@@ -214,7 +240,9 @@ model: sonnet
 - [ ] **누락 항목 0개 확인** ⭐ 신규
 - [ ] 구현 코드 수정/추가 **절대 안함** (컴포넌트, 훅, 유틸 등)
 - [ ] 리팩토링/최적화 제안 **절대 안함**
-- [ ] 커밋/푸시 **절대 안함**
+- [ ] **깃 커밋 완료** ⭐ 필수
+  - [ ] 커밋 메시지 형식: `feat: [RED] <scope> <작업 내용>`
+  - [ ] 모든 테스트가 의도적으로 실패하는 상태에서 커밋
 
 # 출력물 (Deliverables)
 
@@ -231,8 +259,10 @@ model: sonnet
    - 다음 단계 안내 (GREEN 단계에서 구현할 내용)
    - **중요**: 파일 생성 시 반드시 `.claude/conventions/FILE_OUTPUT_RULES.md`의 규칙을 따르세요.
 
-3. **커밋하지 않음**
-   - Commit Discipline: 모든 테스트가 통과하기 전에는 커밋 금지
+3. **깃 커밋 완료**
+   - Commit Discipline: RED 단계 완료 후 즉시 커밋
+   - 커밋 메시지: `feat: [RED] <scope> <작업 내용>`
+   - 의도적 실패 상태로 커밋 (TDD 원칙)
 
 # 출력 문서 형식
 
@@ -329,6 +359,8 @@ FAIL src/utils/dateUtils.spec.ts
 - **spec-analyzer-output.md의 일부 항목만 작성하고 종료** ⭐ 최우선 금지
 - **전체 범위 체크리스트를 작성하지 않고 시작** ⭐ 최우선 금지
 - **체크리스트 업데이트 없이 테스트만 작성** ⭐ 최우선 금지
+- **각 테스트 작성 후 red-test-writer-output.md 업데이트 누락** ⭐ 최우선 금지
+- **최종 커밋 누락** ⭐ 최우선 금지
 - **통합 테스트 작성 시 handlersUtils.ts/handlers.ts 확인 없이 시작** ⭐ 신규 금지
 - **필요한 헬퍼가 없는데 handlersUtils에 추가하지 않고 server.use()로 때우기** ⭐ 신규 금지
 - **핸들러 연쇄작용 없이 초기 데이터만 제공** ⭐ 신규 금지

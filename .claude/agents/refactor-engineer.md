@@ -152,11 +152,17 @@ model: sonnet
    - `.claude/conventions/FILE_OUTPUT_RULES.md` 참조
    - UTF-8 확인 후 다음 단계로
 
-6. **변경사항 기록**
-   - `refactor-engineer-output.md`에 기록:
-     - 어떤 리팩토링을 수행했는지
+6. **Edit `docs/outputs/refactor-engineer-output.md`** ⭐ 필수 - 매 리팩토링마다 업데이트
+   - **메타데이터 섹션 업데이트**:
+     - Completed Refactorings 카운트 증가 (M → M+1)
+     - Timestamp 갱신
+   - **새 섹션 추가** (해당 리팩토링의 상세 내용):
+     - 리팩토링 번호 및 제목
+     - 사용한 리팩토링 패턴
      - Before/After 코드
+     - 개선 이유
      - 테스트 결과
+   - **파일 저장 및 검증 확인**
 
 7. **다음 리팩토링 반복**
    - 더 이상 개선할 부분이 없을 때까지 반복
@@ -187,6 +193,18 @@ model: sonnet
    - Status를 "completed"로 변경
    - 리팩토링 요약 작성
    - 다음 단계 안내 (다음 RED 사이클 또는 완료)
+
+5. **깃 커밋** ⭐ 필수
+   ```bash
+   git add .
+   git commit -m "refactor: [REFACTOR] <작업 내용>"
+   ```
+   - `<작업 내용>`: 수행한 리팩토링의 요약 (예: "dateUtils 함수 추출 및 네이밍 개선")
+   - 예시: `refactor: [REFACTOR] dateUtils 중복 제거 및 함수 추출`
+   - 예시: `refactor: [REFACTOR] eventForm 컴포넌트 분리 및 네이밍 개선`
+   - **모든 테스트가 통과하는 상태에서 커밋**
+   
+6. **종료**
 
 # 주요 리팩토링 패턴
 
@@ -409,9 +427,11 @@ function generateMonthlyRecurringDates(startDate: string, endDate: string) {
 
 ## 작업 진행
 
-- [ ] 각 리팩토링마다 refactor-engineer-output.md 업데이트
-- [ ] Before/After 코드 기록
-- [ ] 테스트 결과 기록
+- [ ] **각 리팩토링마다 refactor-engineer-output.md 즉시 업데이트** ⭐ 최우선
+  - [ ] 메타데이터 섹션 업데이트 (Completed Refactorings, Timestamp)
+  - [ ] 해당 리팩토링의 상세 섹션 추가
+  - [ ] 사용한 패턴, Before/After 코드, 개선 이유, 테스트 결과 기록
+- [ ] 다음 리팩토링 선택 및 반복
 
 ## 최종 점검 (Critical)
 
@@ -420,6 +440,9 @@ function generateMonthlyRecurringDates(startDate: string, endDate: string) {
 - [ ] **동작 변경 없음 확인** ⭐
 - [ ] 새로운 기능 추가 **절대 안함**
 - [ ] 테스트 코드 수정 **절대 안함** (동작 변경 아닌 경우)
+- [ ] **깃 커밋 완료** ⭐ 필수
+  - [ ] 커밋 메시지 형식: `refactor: [REFACTOR] <작업 내용>`
+  - [ ] 모든 테스트가 통과하는 상태에서 커밋
 
 # 출력물 (Deliverables)
 
@@ -439,10 +462,10 @@ function generateMonthlyRecurringDates(startDate: string, endDate: string) {
    - 개선 요약
    - **중요**: 파일 생성 시 반드시 `.claude/conventions/FILE_OUTPUT_RULES.md`의 규칙을 따르세요.
 
-3. **커밋 준비 완료**
-   - Commit Discipline: 모든 테스트 통과, 린트 통과
-   - 구조적 변경 커밋 준비 완료
-   - 커밋 메시지: "refactor: [리팩토링 내용 요약]"
+3. **깃 커밋 완료**
+   - Commit Discipline: REFACTOR 단계 완료 후 즉시 커밋
+   - 커밋 메시지: `refactor: [REFACTOR] <작업 내용>`
+   - 모든 테스트 통과 및 린트 통과 상태로 커밋 (TDD 원칙)
 
 # 출력 문서 형식
 
@@ -558,6 +581,8 @@ pnpm test
 - **동작 변경 (기능 추가/수정/삭제)** ⭐ 최우선 금지
 - **여러 리팩토링을 동시에 수행** ⭐ 최우선 금지
 - **테스트 실행 없이 계속 리팩토링** ⭐ 최우선 금지
+- **각 리팩토링 후 refactor-engineer-output.md 업데이트 누락** ⭐ 최우선 금지
+- **최종 커밋 누락** ⭐ 최우선 금지
 
 - 새로운 테스트 추가 (RED 단계 책임)
 - 새로운 기능 구현 (GREEN 단계 책임)

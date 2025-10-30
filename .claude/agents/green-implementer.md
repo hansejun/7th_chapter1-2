@@ -189,13 +189,21 @@ pnpm run lint
    - `.claude/conventions/FILE_OUTPUT_RULES.md` 참조
    - UTF-8 확인 후 다음 단계로
 
-8. **Edit `docs/outputs/green-implementer-output.md`**
-   - 체크리스트에서 해당 항목을 `[ ]` → `[x]` 변경
-   - 새 섹션 추가:
+8. **Edit `docs/outputs/green-implementer-output.md`** ⭐ 필수 - 매 구현마다 업데이트
+   - **메타데이터 섹션 업데이트**:
+     - Completed Tests 카운트 증가 (M → M+1)
+     - Progress 퍼센트 업데이트
+     - Timestamp 갱신
+   - **체크리스트 섹션 업데이트**:
+     - 해당 항목을 `[ ]` → `[x]` 변경
+     - 카테고리별 완료 카운트 업데이트 (M/N)
+     - 전체 진행 상황 업데이트
+   - **새 섹션 추가** (해당 구현의 상세 내용):
+     - 앵커 ID 추가 (예: `<a id="a-1"></a>`)
      - 구현한 코드
      - 테스트 통과 결과
      - 의도적으로 단순하게 구현한 이유
-   - Completed 카운트 증가
+   - **파일 저장 및 검증 확인**
 
 9. **다음 항목으로 반복** (모든 테스트 통과까지)
 
@@ -222,7 +230,19 @@ pnpm run lint
 4. **완료 보고**
    - Status를 "completed"로 변경
    - 다음 단계 (REFACTOR) 안내 작성
-   - 종료
+
+5. **깃 커밋** ⭐ 필수
+   ```bash
+   git add .
+   git commit -m "feat: [GREEN] <scope> <작업 내용>"
+   ```
+   - `<scope>`: 작업한 도메인/기능 영역 (예: dateUtils, eventForm, notifications)
+   - `<작업 내용>`: 구현한 내용의 요약 (예: "반복 일정 계산 로직 구현")
+   - 예시: `feat: [GREEN] dateUtils 31일 매월 반복 로직 구현`
+   - 예시: `feat: [GREEN] eventForm 반복 일정 수정/삭제 기능 구현`
+   - **모든 테스트가 통과하는 상태에서 커밋**
+   
+6. **종료**
 
 # GREEN 단계 체크리스트
 
@@ -259,8 +279,11 @@ pnpm run lint
 ## 작업 진행
 
 - [ ] red-test-writer-output.md의 체크리스트 기반 작업
-- [ ] 각 테스트 통과 후 green-implementer-output.md 체크리스트 업데이트
-- [ ] Completed 카운트 증가
+- [ ] **각 테스트 통과 후 green-implementer-output.md 즉시 업데이트** ⭐ 최우선
+  - [ ] 메타데이터 섹션 업데이트 (Completed, Progress, Timestamp)
+  - [ ] 체크리스트에서 해당 항목 `[x]` 표시
+  - [ ] 카테고리별 완료 카운트 업데이트
+  - [ ] 해당 구현의 상세 섹션 추가 (앵커 링크 포함)
 - [ ] 다음 미완료 항목 선택 및 반복
 
 ## 최종 점검 (Critical)
@@ -270,6 +293,9 @@ pnpm run lint
 - [ ] **red-test-writer와 항목 수 일치 확인** ⭐
 - [ ] 리팩토링/최적화/구조 개선 **절대 안함** (REFACTOR 단계 담당)
 - [ ] 불필요한 기능 추가 **절대 안함**
+- [ ] **깃 커밋 완료** ⭐ 필수
+  - [ ] 커밋 메시지 형식: `feat: [GREEN] <scope> <작업 내용>`
+  - [ ] 모든 테스트가 통과하는 상태에서 커밋
 
 # 출력물 (Deliverables)
 
@@ -289,8 +315,10 @@ pnpm run lint
    - 다음 단계 안내 (REFACTOR 단계)
    - **중요**: 파일 생성 시 반드시 `.claude/conventions/FILE_OUTPUT_RULES.md`의 규칙을 따르세요.
 
-3. **커밋하지 않음**
-   - Commit Discipline: REFACTOR 단계 완료 후 커밋
+3. **깃 커밋 완료**
+   - Commit Discipline: GREEN 단계 완료 후 즉시 커밋
+   - 커밋 메시지: `feat: [GREEN] <scope> <작업 내용>`
+   - 모든 테스트 통과 상태로 커밋 (TDD 원칙)
 
 # 출력 문서 형식
 
@@ -397,6 +425,8 @@ Tests 1 passed (1)
 - **테스트가 요구하지 않는 기능 추가** ⭐ 최우선 금지
 - **과도한 일반화, 추상화, 최적화** ⭐ 최우선 금지
 - **체크리스트 업데이트 없이 구현만 작성** ⭐ 최우선 금지
+- **각 테스트 통과 후 green-implementer-output.md 업데이트 누락** ⭐ 최우선 금지
+- **최종 커밋 누락** ⭐ 최우선 금지
 
 - 리팩토링, 구조 개선 (REFACTOR 단계에서 수행)
 - 여러 테스트를 한 번에 통과시키려는 복잡한 구현
