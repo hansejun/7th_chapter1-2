@@ -340,3 +340,131 @@ it('notificationTime을 10으로 하면 지정 시간 10분 전 알람 텍스트
 
   expect(screen.getByText('10분 후 기존 회의 일정이 시작됩니다.')).toBeInTheDocument();
 });
+
+describe('반복 일정 UI', () => {
+  it('반복 유형 Select가 존재하고 5개 옵션이 있다', async () => {
+    setupMockHandlerCreation();
+
+    const { user } = setup(<App />);
+
+    // 일정 추가 모달 열기
+    await user.click(screen.getAllByText('일정 추가')[0]);
+
+    // "반복 유형" label이 있는 Select 확인
+    const repeatTypeLabel = screen.getByLabelText('반복 유형');
+    expect(repeatTypeLabel).toBeInTheDocument();
+
+    // Select 열기
+    await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
+
+    // 5개 옵션 확인
+    expect(screen.getByRole('option', { name: '반복 안함-option' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: '매일-option' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: '매주-option' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: '매월-option' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: '매년-option' })).toBeInTheDocument();
+  });
+
+  it("'반복 안함' 선택 시 추가 필드가 표시되지 않는다", async () => {
+    setupMockHandlerCreation();
+
+    const { user } = setup(<App />);
+
+    await user.click(screen.getAllByText('일정 추가')[0]);
+
+    // 기본값이 '반복 안함'이므로 추가 필드가 없어야 함
+    expect(screen.queryByLabelText('반복 간격')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('반복 종료일')).not.toBeInTheDocument();
+  });
+
+  it("'매일' 선택 시 반복 간격과 종료일 필드가 표시된다", async () => {
+    setupMockHandlerCreation();
+
+    const { user } = setup(<App />);
+
+    await user.click(screen.getAllByText('일정 추가')[0]);
+
+    // 반복 유형을 '매일'로 변경
+    await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '매일-option' }));
+
+    // 추가 필드 확인
+    expect(screen.getByLabelText('반복 간격')).toBeInTheDocument();
+    expect(screen.getByLabelText('반복 종료일')).toBeInTheDocument();
+  });
+
+  it('반복 간격 필드는 min 속성이 1이다', async () => {
+    setupMockHandlerCreation();
+
+    const { user } = setup(<App />);
+
+    await user.click(screen.getAllByText('일정 추가')[0]);
+
+    // 반복 유형을 '매일'로 변경
+    await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '매일-option' }));
+
+    const intervalInput = screen.getByLabelText('반복 간격') as HTMLInputElement;
+    expect(intervalInput.min).toBe('1');
+  });
+
+  it('반복 종료일 필드는 max 속성이 2025-12-31이다', async () => {
+    setupMockHandlerCreation();
+
+    const { user } = setup(<App />);
+
+    await user.click(screen.getAllByText('일정 추가')[0]);
+
+    // 반복 유형을 '매일'로 변경
+    await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '매일-option' }));
+
+    const endDateInput = screen.getByLabelText('반복 종료일') as HTMLInputElement;
+    expect(endDateInput.max).toBe('2025-12-31');
+  });
+
+  it("'매주' 선택 시 추가 필드가 표시된다", async () => {
+    setupMockHandlerCreation();
+
+    const { user } = setup(<App />);
+
+    await user.click(screen.getAllByText('일정 추가')[0]);
+
+    // 반복 유형을 '매주'로 변경
+    await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '매주-option' }));
+
+    expect(screen.getByLabelText('반복 간격')).toBeInTheDocument();
+    expect(screen.getByLabelText('반복 종료일')).toBeInTheDocument();
+  });
+
+  it("'매월' 선택 시 추가 필드가 표시된다", async () => {
+    setupMockHandlerCreation();
+
+    const { user } = setup(<App />);
+
+    await user.click(screen.getAllByText('일정 추가')[0]);
+
+    // 반복 유형을 '매월'로 변경
+    await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '매월-option' }));
+
+    expect(screen.getByLabelText('반복 간격')).toBeInTheDocument();
+    expect(screen.getByLabelText('반복 종료일')).toBeInTheDocument();
+  });
+
+  it("'매년' 선택 시 추가 필드가 표시된다", async () => {
+    setupMockHandlerCreation();
+
+    const { user } = setup(<App />);
+
+    await user.click(screen.getAllByText('일정 추가')[0]);
+
+    // 반복 유형을 '매년'로 변경
+    await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '매년-option' }));
+
+    expect(screen.getByLabelText('반복 간격')).toBeInTheDocument();
+    expect(screen.getByLabelText('반복 종료일')).toBeInTheDocument();
+  });
+});

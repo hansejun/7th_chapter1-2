@@ -1,101 +1,96 @@
-# RED Test Writer Input - Cycle 4
+# RED Test Writer Input - Cycle 5
 
 > **메타데이터**
-> - Cycle: 4/10
-> - Feature: generateRecurringInstances 함수
+> - Cycle: 5/10
+> - Feature: 반복 설정 UI 컴포넌트
 > - Agent: tdd-orchestrator → red-test-writer
-> - Timestamp: 2025-10-31T10:45:00Z
+> - Timestamp: 2025-10-31T05:20:00Z
 
 ## 작업 지시
 
-다음 함수에 대한 **의도적으로 실패하는 테스트**를 작성하세요.
+반복 일정 생성을 위한 **UI 컴포넌트**에 대한 **의도적으로 실패하는 통합 테스트**를 작성하세요.
 
-### 구현 대상 함수
+### 구현 대상 UI
 
-```typescript
-function generateRecurringInstances(
-  eventForm: EventForm,
-  endDate: string
-): Omit<Event, 'id'>[]
-```
+App.tsx 또는 useEventForm.ts에 다음 UI 요소 추가:
 
-### 함수 목적
+1. **반복 유형 Select**
+   - 옵션: "반복 안함", "매일", "매주", "매월", "매년"
+   - label: "반복 유형"
 
-반복 일정의 모든 인스턴스를 생성합니다.
+2. **반복 간격 TextField** (반복 유형이 'none'이 아닐 때만 표시)
+   - type: number
+   - min: 1
+   - label: "반복 간격"
 
-### 입력
-- `eventForm: EventForm` - 사용자 입력 (date, repeat.type, repeat.interval 포함)
-- `endDate: string` - 반복 종료 날짜 (YYYY-MM-DD, 최대 2025-12-31)
+3. **반복 종료일 TextField** (반복 유형이 'none'이 아닐 때만 표시)
+   - type: date
+   - max: "2025-12-31"
+   - label: "반복 종료일"
 
-### 출력
-- `Omit<Event, 'id'>[]` - 개별 이벤트 배열 (id 제외)
+### 테스트 시나리오 (통합 테스트)
 
-### 로직 명세
+파일: `src/__tests__/medium.integration.spec.tsx`
 
-1. `baseDate` 파싱 (eventForm.date)
-2. 첫 이벤트 무조건 추가
-3. while 루프:
-   - `getNextOccurrence`로 다음 날짜 계산
-   - 종료일 초과 시 break
-   - `shouldSkipDate`로 건너뛰기 체크
-   - 유효하면 instances에 추가
-4. instances 반환
+1. **반복 유형 Select 존재 확인**
+   - 일정 추가 모달 열기
+   - "반복 유형" label이 있는 Select 확인
+   - 5개 옵션 확인 (none, daily, weekly, monthly, yearly)
 
-### 테스트 시나리오 (spec-analyzer-output.md 기반)
+2. **'none' 선택 시 추가 필드 숨김**
+   - 반복 유형을 "반복 안함" 선택
+   - "반복 간격", "반복 종료일" 필드가 DOM에 없음 확인
 
-1. **매일 반복 (3일)**
-   - 입력: 2025-01-01, 매일 간격 1, 종료 2025-01-03
-   - 출력: [2025-01-01, 2025-01-02, 2025-01-03] (3개)
+3. **'daily' 선택 시 추가 필드 표시**
+   - 반복 유형을 "매일" 선택
+   - "반복 간격" TextField 표시 확인
+   - "반복 종료일" TextField 표시 확인
 
-2. **매일 반복 (10일)**
-   - 입력: 2025-01-01, 매일 간격 1, 종료 2025-01-10
-   - 출력: 1/1 ~ 1/10 (10개)
+4. **반복 간격 최소값 1 강제**
+   - 반복 유형을 "매일" 선택
+   - 간격 필드에 0 입력 시도
+   - HTML min 속성으로 인해 1 이하 입력 불가 확인
 
-3. **매주 반복 (월요일)**
-   - 입력: 2025-01-06(월), 매주 간격 1, 종료 2025-01-31
-   - 출력: [1/6, 1/13, 1/20, 1/27] (4개, 모두 월요일)
+5. **반복 종료일 최대값 2025-12-31**
+   - 반복 유형을 "매일" 선택
+   - 종료일 필드의 max 속성이 "2025-12-31"인지 확인
 
-4. **매월 반복 (15일)**
-   - 입력: 2025-01-15, 매월 간격 1, 종료 2025-05-31
-   - 출력: [1/15, 2/15, 3/15, 4/15, 5/15] (5개)
+6. **매주 반복 선택 시 UI 표시**
+   - 반복 유형을 "매주" 선택
+   - 간격 및 종료일 필드 표시 확인
 
-5. **매월 31일 반복 (건너뛰기)**
-   - 입력: 2025-01-31, 매월 간격 1, 종료 2025-05-31
-   - 출력: [1/31, 3/31, 5/31] (3개, 2월/4월 건너뜀)
+7. **매월 반복 선택 시 UI 표시**
+   - 반복 유형을 "매월" 선택
+   - 간격 및 종료일 필드 표시 확인
 
-6. **매년 반복**
-   - 입력: 2025-01-15, 매년 간격 1, 종료 2025-12-31
-   - 출력: [2025-01-15] (1개, 같은 해라서)
-
-7. **반복 간격 2 (매일)**
-   - 입력: 2025-01-01, 매일 간격 2, 종료 2025-01-10
-   - 출력: [1/1, 1/3, 1/5, 1/7, 1/9] (5개)
-
-8. **반복 간격 2 (매주)**
-   - 입력: 2025-01-06(월), 매주 간격 2, 종료 2025-03-31
-   - 출력: [1/6, 1/20, 2/3, 2/17, 3/3, 3/17, 3/31] (7개)
-
-9. **첫 이벤트만 (종료일 = 시작일)**
-   - 입력: 2025-12-31, 매일 간격 1, 종료 2025-12-31
-   - 출력: [12/31] (1개)
-
-10. **반복 유형 'none'**
-    - 입력: 2025-01-01, none
-    - 출력: [2025-01-01] (1개)
+8. **매년 반복 선택 시 UI 표시**
+   - 반복 유형을 "매년" 선택
+   - 간격 및 종료일 필드 표시 확인
 
 ### 파일 위치
 
-- 테스트 파일: `src/__tests__/unit/easy.repeatUtils.spec.ts`
-- 구현 파일: `src/utils/repeatUtils.ts` (아직 함수 미구현)
+- 테스트 파일: `src/__tests__/medium.integration.spec.tsx`
+- 구현 파일: `src/App.tsx` 또는 `src/hooks/useEventForm.ts`
 
 ### 요구사항
 
-- ✅ 테스트는 Assertion 기반 실패여야 함 (미구현으로 인한)
-- ✅ Baseline(142) 대비 실패 수 +10 이상 증가
-- ✅ 모든 시나리오를 단일 describe 블록에 작성
-- ✅ 의존성 함수: `getNextOccurrence`, `shouldSkipDate`, `formatDate` (모두 구현됨)
+- ✅ 테스트는 Assertion 기반 실패여야 함 (UI 미구현으로 인한)
+- ✅ Baseline(152) 대비 실패 수 최소 +1 증가
+- ✅ React Testing Library 사용 (screen, user, within)
+- ✅ 새로운 describe 블록 "반복 일정 UI" 추가
+- ✅ Material-UI Select 접근 방법 참고 (CLAUDE.md)
 
 ### 베이스라인
 
-- 현재 통과 테스트: 142개
+- 현재 통과 테스트: 152개
 - 현재 실패 테스트: 0개
+
+### 중요 참고사항
+
+**CLAUDE.md의 Select 컴포넌트 접근 예시:**
+```typescript
+await user.click(within(screen.getByLabelText('카테고리')).getByRole('combobox'));
+await user.click(screen.getByRole('option', { name: `${category}-option` }));
+```
+
+반복 유형 Select도 동일한 방식으로 접근하세요.
