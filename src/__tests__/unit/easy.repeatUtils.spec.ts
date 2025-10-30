@@ -7,6 +7,7 @@ import {
   getDayOfWeek,
   isLeapYear,
   shouldSkipDate,
+  getNextOccurrence,
 } from '../../utils/repeatUtils';
 
 describe('generateRepeatInstances', () => {
@@ -209,5 +210,175 @@ describe('shouldSkipDate', () => {
 
     // Assert
     expect(result).toBe(false);
+  });
+});
+
+describe('getNextOccurrence', () => {
+  it('매일 반복 간격 1: 2025-01-01 → 2025-01-02', () => {
+    // Arrange
+    const currentDate = new Date('2025-01-01');
+    const baseDate = new Date('2025-01-01');
+    const repeatType: RepeatType = 'daily';
+    const interval = 1;
+
+    // Act
+    const nextDate = getNextOccurrence(currentDate, repeatType, interval, baseDate);
+
+    // Assert
+    expect(nextDate).not.toBeNull();
+    expect(formatDate(nextDate!)).toBe('2025-01-02');
+  });
+
+  it('매일 반복 간격 2: 2025-01-01 → 2025-01-03', () => {
+    // Arrange
+    const currentDate = new Date('2025-01-01');
+    const baseDate = new Date('2025-01-01');
+    const repeatType: RepeatType = 'daily';
+    const interval = 2;
+
+    // Act
+    const nextDate = getNextOccurrence(currentDate, repeatType, interval, baseDate);
+
+    // Assert
+    expect(nextDate).not.toBeNull();
+    expect(formatDate(nextDate!)).toBe('2025-01-03');
+  });
+
+  it('매일 반복 간격 7: 2025-01-01 → 2025-01-08', () => {
+    // Arrange
+    const currentDate = new Date('2025-01-01');
+    const baseDate = new Date('2025-01-01');
+    const repeatType: RepeatType = 'daily';
+    const interval = 7;
+
+    // Act
+    const nextDate = getNextOccurrence(currentDate, repeatType, interval, baseDate);
+
+    // Assert
+    expect(nextDate).not.toBeNull();
+    expect(formatDate(nextDate!)).toBe('2025-01-08');
+  });
+
+  it('매주 반복 간격 1: 2025-01-06(월) → 2025-01-13(월)', () => {
+    // Arrange
+    const currentDate = new Date('2025-01-06');
+    const baseDate = new Date('2025-01-06');
+    const repeatType: RepeatType = 'weekly';
+    const interval = 1;
+
+    // Act
+    const nextDate = getNextOccurrence(currentDate, repeatType, interval, baseDate);
+
+    // Assert
+    expect(nextDate).not.toBeNull();
+    expect(formatDate(nextDate!)).toBe('2025-01-13');
+    expect(getDayOfWeek(nextDate!)).toBe(1); // 월요일
+  });
+
+  it('매주 반복 간격 2: 2025-01-06(월) → 2025-01-20(월)', () => {
+    // Arrange
+    const currentDate = new Date('2025-01-06');
+    const baseDate = new Date('2025-01-06');
+    const repeatType: RepeatType = 'weekly';
+    const interval = 2;
+
+    // Act
+    const nextDate = getNextOccurrence(currentDate, repeatType, interval, baseDate);
+
+    // Assert
+    expect(nextDate).not.toBeNull();
+    expect(formatDate(nextDate!)).toBe('2025-01-20');
+    expect(getDayOfWeek(nextDate!)).toBe(1); // 월요일
+  });
+
+  it('매월 반복 간격 1: 2025-01-15 → 2025-02-15', () => {
+    // Arrange
+    const currentDate = new Date('2025-01-15');
+    const baseDate = new Date('2025-01-15');
+    const repeatType: RepeatType = 'monthly';
+    const interval = 1;
+
+    // Act
+    const nextDate = getNextOccurrence(currentDate, repeatType, interval, baseDate);
+
+    // Assert
+    expect(nextDate).not.toBeNull();
+    expect(formatDate(nextDate!)).toBe('2025-02-15');
+  });
+
+  it('매월 반복 간격 2: 2025-01-15 → 2025-03-15', () => {
+    // Arrange
+    const currentDate = new Date('2025-01-15');
+    const baseDate = new Date('2025-01-15');
+    const repeatType: RepeatType = 'monthly';
+    const interval = 2;
+
+    // Act
+    const nextDate = getNextOccurrence(currentDate, repeatType, interval, baseDate);
+
+    // Assert
+    expect(nextDate).not.toBeNull();
+    expect(formatDate(nextDate!)).toBe('2025-03-15');
+  });
+
+  it('매월 31일 반복: 2025-01-31 → 2025-02-31 (자동 조정, shouldSkipDate에서 필터링)', () => {
+    // Arrange
+    const currentDate = new Date('2025-01-31');
+    const baseDate = new Date('2025-01-31');
+    const repeatType: RepeatType = 'monthly';
+    const interval = 1;
+
+    // Act
+    const nextDate = getNextOccurrence(currentDate, repeatType, interval, baseDate);
+
+    // Assert
+    expect(nextDate).not.toBeNull();
+    // 2월에는 31일이 없으므로 자동으로 3월로 넘어감
+    // 이는 shouldSkipDate에서 필터링되어야 함
+    expect(nextDate!.getDate()).not.toBe(31);
+  });
+
+  it('매년 반복 간격 1: 2025-01-15 → 2026-01-15', () => {
+    // Arrange
+    const currentDate = new Date('2025-01-15');
+    const baseDate = new Date('2025-01-15');
+    const repeatType: RepeatType = 'yearly';
+    const interval = 1;
+
+    // Act
+    const nextDate = getNextOccurrence(currentDate, repeatType, interval, baseDate);
+
+    // Assert
+    expect(nextDate).not.toBeNull();
+    expect(formatDate(nextDate!)).toBe('2026-01-15');
+  });
+
+  it('매년 반복 간격 2: 2025-01-15 → 2027-01-15', () => {
+    // Arrange
+    const currentDate = new Date('2025-01-15');
+    const baseDate = new Date('2025-01-15');
+    const repeatType: RepeatType = 'yearly';
+    const interval = 2;
+
+    // Act
+    const nextDate = getNextOccurrence(currentDate, repeatType, interval, baseDate);
+
+    // Assert
+    expect(nextDate).not.toBeNull();
+    expect(formatDate(nextDate!)).toBe('2027-01-15');
+  });
+
+  it('none 유형: null 반환', () => {
+    // Arrange
+    const currentDate = new Date('2025-01-01');
+    const baseDate = new Date('2025-01-01');
+    const repeatType: RepeatType = 'none';
+    const interval = 1;
+
+    // Act
+    const nextDate = getNextOccurrence(currentDate, repeatType, interval, baseDate);
+
+    // Assert
+    expect(nextDate).toBeNull();
   });
 });

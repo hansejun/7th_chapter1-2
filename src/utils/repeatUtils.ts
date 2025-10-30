@@ -1,4 +1,4 @@
-import { Event } from '../types';
+import { Event, RepeatType } from '../types';
 
 /**
  * Date 객체를 YYYY-MM-DD 형식 문자열로 변환합니다.
@@ -55,6 +55,24 @@ export function shouldSkipDate(
   }
 
   return false;
+}
+
+/**
+ * 현재 날짜를 기반으로 다음 반복 발생일을 계산합니다.
+ * @param currentDate - 현재 날짜
+ * @param repeatType - 반복 유형
+ * @param interval - 반복 간격
+ * @param baseDate - 기준 날짜 (첫 이벤트 날짜)
+ * @returns 다음 발생일 (없으면 null)
+ */
+export function getNextOccurrence(
+  currentDate: Date,
+  repeatType: RepeatType,
+  interval: number,
+  baseDate: Date
+): Date | null {
+  // TODO: 구현 필요 (RED 단계 - 의도적 실패)
+  return null;
 }
 
 /**
