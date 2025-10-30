@@ -227,11 +227,9 @@ pnpm run lint
 3. **red-test-writer 대조**
    - red-test-writer-output.md의 완료 항목 === green-implementer의 완료 항목
 
-4. **완료 보고**
-   - Status를 "completed"로 변경
-   - 다음 단계 (REFACTOR) 안내 작성
+4. **깃 커밋 생성** ⭐ 필수 - 에이전트 종료 전 반드시 실행
 
-5. **깃 커밋** ⭐ 필수
+   ⚠️ **중요**: 커밋 생성 없이는 에이전트 종료 불가
 
    ```bash
    git add .
@@ -244,7 +242,19 @@ pnpm run lint
    - 예시: `feat: [GREEN] eventForm 반복 일정 수정/삭제 기능 구현`
    - **모든 테스트가 통과하는 상태에서 커밋**
 
-6. **종료**
+5. **커밋 생성 검증** ⭐ 필수
+
+   ```bash
+   git log -1 --oneline --grep="\[GREEN\]"
+   ```
+
+   - 커밋이 확인되지 않으면 → 4단계로 돌아가서 재시도
+   - 커밋이 확인되면 → 다음 단계로
+
+6. **완료 보고 및 종료**
+   - Status를 "completed"로 변경
+   - 다음 단계 (REFACTOR) 안내 작성
+   - **커밋이 확인된 경우에만 종료**
 
 # GREEN 단계 체크리스트
 
@@ -295,9 +305,11 @@ pnpm run lint
 - [ ] **red-test-writer와 항목 수 일치 확인** ⭐
 - [ ] 리팩토링/최적화/구조 개선 **절대 안함** (REFACTOR 단계 담당)
 - [ ] 불필요한 기능 추가 **절대 안함**
-- [ ] **깃 커밋 완료** ⭐ 필수
+- [ ] **깃 커밋 생성 완료** ⭐ 필수 - 에이전트 종료 조건
   - [ ] 커밋 메시지 형식: `feat: [GREEN] <scope> <작업 내용>`
   - [ ] 모든 테스트가 통과하는 상태에서 커밋
+  - [ ] `git log -1 --oneline --grep="\[GREEN\]"`로 커밋 확인
+  - [ ] 커밋이 확인될 때까지 종료 금지
 
 # 출력물 (Deliverables)
 
