@@ -35,8 +35,7 @@ import { useEventForm } from './hooks/useEventForm.ts';
 import { useEventOperations } from './hooks/useEventOperations.ts';
 import { useNotifications } from './hooks/useNotifications.ts';
 import { useSearch } from './hooks/useSearch.ts';
-// import { Event, EventForm, RepeatType } from './types';
-import { Event, EventForm } from './types';
+import { Event, EventForm, RepeatType } from './types';
 import {
   formatDate,
   formatMonth,
@@ -77,11 +76,11 @@ function App() {
     isRepeating,
     setIsRepeating,
     repeatType,
-    // setRepeatType,
+    setRepeatType,
     repeatInterval,
-    // setRepeatInterval,
+    setRepeatInterval,
     repeatEndDate,
-    // setRepeatEndDate,
+    setRepeatEndDate,
     notificationTime,
     setNotificationTime,
     startTimeError,
@@ -437,45 +436,57 @@ function App() {
             </Select>
           </FormControl>
 
-          {/* ! 반복은 8주차 과제에 포함됩니다. 구현하고 싶어도 참아주세요~ */}
-          {/* {isRepeating && (
-            <Stack spacing={2}>
+          <FormControl fullWidth>
+            <FormLabel id="repeat-type-label">반복 유형</FormLabel>
+            <Select
+              size="small"
+              value={repeatType}
+              onChange={(e) => setRepeatType(e.target.value as RepeatType)}
+              aria-labelledby="repeat-type-label"
+              aria-label="반복 유형"
+            >
+              <MenuItem value="none" aria-label="반복 안함-option">
+                반복 안함
+              </MenuItem>
+              <MenuItem value="daily" aria-label="매일-option">
+                매일
+              </MenuItem>
+              <MenuItem value="weekly" aria-label="매주-option">
+                매주
+              </MenuItem>
+              <MenuItem value="monthly" aria-label="매월-option">
+                매월
+              </MenuItem>
+              <MenuItem value="yearly" aria-label="매년-option">
+                매년
+              </MenuItem>
+            </Select>
+          </FormControl>
+
+          {repeatType !== 'none' && (
+            <>
               <FormControl fullWidth>
-                <FormLabel>반복 유형</FormLabel>
-                <Select
+                <TextField
+                  label="반복 간격"
                   size="small"
-                  value={repeatType}
-                  onChange={(e) => setRepeatType(e.target.value as RepeatType)}
-                >
-                  <MenuItem value="daily">매일</MenuItem>
-                  <MenuItem value="weekly">매주</MenuItem>
-                  <MenuItem value="monthly">매월</MenuItem>
-                  <MenuItem value="yearly">매년</MenuItem>
-                </Select>
+                  type="number"
+                  value={repeatInterval}
+                  onChange={(e) => setRepeatInterval(Number(e.target.value))}
+                  slotProps={{ htmlInput: { min: 1 } }}
+                />
               </FormControl>
-              <Stack direction="row" spacing={2}>
-                <FormControl fullWidth>
-                  <FormLabel>반복 간격</FormLabel>
-                  <TextField
-                    size="small"
-                    type="number"
-                    value={repeatInterval}
-                    onChange={(e) => setRepeatInterval(Number(e.target.value))}
-                    slotProps={{ htmlInput: { min: 1 } }}
-                  />
-                </FormControl>
-                <FormControl fullWidth>
-                  <FormLabel>반복 종료일</FormLabel>
-                  <TextField
-                    size="small"
-                    type="date"
-                    value={repeatEndDate}
-                    onChange={(e) => setRepeatEndDate(e.target.value)}
-                  />
-                </FormControl>
-              </Stack>
-            </Stack>
-          )} */}
+              <FormControl fullWidth>
+                <TextField
+                  label="반복 종료일"
+                  size="small"
+                  type="date"
+                  value={repeatEndDate}
+                  onChange={(e) => setRepeatEndDate(e.target.value)}
+                  slotProps={{ htmlInput: { max: '2025-12-31' } }}
+                />
+              </FormControl>
+            </>
+          )}
 
           <Button
             data-testid="event-submit-button"

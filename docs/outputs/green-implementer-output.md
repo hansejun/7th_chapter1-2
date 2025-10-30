@@ -1,120 +1,185 @@
-# GREEN 단계 구현 작업 내역 - Cycle 2
+# GREEN 단계 구현 결과 - Cycle 5
 
 > **메타데이터**
 >
-> - Agent: tdd-orchestrator (직접 구현)
-> - Status: completed
-> - Timestamp: 2025-10-31T04:30:00Z
-> - Input Source: docs/outputs/red-test-writer-output.md (Cycle 2)
-> - Implemented Functions: 1개 (shouldSkipDate)
-> - Implementation File: src/utils/repeatUtils.ts
-> - Test Results: 131/131 passed (5개 신규 통과)
+> - Agent: tdd-orchestrator (direct)
+> - Status: success
+> - Timestamp: 2025-10-31T05:26:00Z
+> - Cycle: 5/10
+> - Feature: 반복 설정 UI 컴포넌트
+> - Input Source: docs/outputs/red-test-writer-output.md
 
----
+## 구현 내역
 
-## 구현 내용
+### 파일: src/App.tsx
 
-### shouldSkipDate 구현
+1. **RepeatType import 활성화**
+   - `import { Event, EventForm, RepeatType } from './types';`
 
-**함수 시그니처**:
+2. **Setter 활성화**
+   - `setRepeatType`, `setRepeatInterval`, `setRepeatEndDate` 주석 해제
+
+3. **반복 유형 Select 추가**
+   - FormControl + FormLabel + Select
+   - label: "반복 유형"
+   - aria-label 속성 추가
+   - 5개 옵션: none(반복 안함), daily(매일), weekly(매주), monthly(매월), yearly(매년)
+   - 각 옵션에 aria-label 추가
+
+4. **반복 간격 TextField 추가** (조건부 렌더링)
+   - 표시 조건: `repeatType !== 'none'`
+   - TextField with label="반복 간격"
+   - type="number"
+   - min="1" (htmlInput props)
+
+5. **반복 종료일 TextField 추가** (조건부 렌더링)
+   - 표시 조건: `repeatType !== 'none'`
+   - TextField with label="반복 종료일"
+   - type="date"
+   - max="2025-12-31" (htmlInput props)
+
+## 구현 코드
+
+### src/App.tsx (line 440-490)
+
 ```typescript
-export function shouldSkipDate(
-  date: Date,
-  repeatType: string,
-  baseDay: number,
-  baseMonth?: number
-): boolean
+<FormControl fullWidth>
+  <FormLabel id="repeat-type-label">반복 유형</FormLabel>
+  <Select
+    size="small"
+    value={repeatType}
+    onChange={(e) => setRepeatType(e.target.value as RepeatType)}
+    aria-labelledby="repeat-type-label"
+    aria-label="반복 유형"
+  >
+    <MenuItem value="none" aria-label="반복 안함-option">
+      반복 안함
+    </MenuItem>
+    <MenuItem value="daily" aria-label="매일-option">
+      매일
+    </MenuItem>
+    <MenuItem value="weekly" aria-label="매주-option">
+      매주
+    </MenuItem>
+    <MenuItem value="monthly" aria-label="매월-option">
+      매월
+    </MenuItem>
+    <MenuItem value="yearly" aria-label="매년-option">
+      매년
+    </MenuItem>
+  </Select>
+</FormControl>
+
+{repeatType !== 'none' && (
+  <>
+    <FormControl fullWidth>
+      <TextField
+        label="반복 간격"
+        size="small"
+        type="number"
+        value={repeatInterval}
+        onChange={(e) => setRepeatInterval(Number(e.target.value))}
+        slotProps={{ htmlInput: { min: 1 } }}
+      />
+    </FormControl>
+    <FormControl fullWidth>
+      <TextField
+        label="반복 종료일"
+        size="small"
+        type="date"
+        value={repeatEndDate}
+        onChange={(e) => setRepeatEndDate(e.target.value)}
+        slotProps={{ htmlInput: { max: '2025-12-31' } }}
+      />
+    </FormControl>
+  </>
+)}
 ```
 
-**구현 코드**:
-```typescript
-export function shouldSkipDate(
-  date: Date,
-  repeatType: string,
-  baseDay: number,
-  baseMonth?: number
-): boolean {
-  // 매월 31일 반복: 정확히 31일이 아니면 건너뜀
-  if (repeatType === 'monthly' && baseDay === 31) {
-    return date.getDate() !== 31;
-  }
+## 테스트 결과
 
-  // 매년 2/29 반복: 윤년이 아니거나 29일이 아니면 건너뜀
-  if (repeatType === 'yearly' && baseMonth === 1 && baseDay === 29) {
-    return !isLeapYear(date.getFullYear()) || date.getDate() !== 29;
-  }
+### 전체 테스트 실행
 
-  return false;
-}
+```
+ Test Files  12 passed (12)
+      Tests  160 passed (160)
 ```
 
-**구현 설명**:
-1. **매월 31일 반복 처리**:
-   - 반복 유형이 'monthly'이고 기준일이 31일일 때
-   - 현재 날짜가 정확히 31일이 아니면 건너뜀 (2월, 4월, 6월, 9월, 11월)
+**Before**: 152 passed, 7 failed
+**After**: 160 passed, 0 failed
+**결과**: ✅ 모든 테스트 통과
 
-2. **매년 2/29 반복 처리**:
-   - 반복 유형이 'yearly'이고 기준월이 1(2월), 기준일이 29일일 때
-   - 윤년이 아니거나 29일이 아니면 건너뜀
-   - `isLeapYear()` 함수 재사용
+### 반복 일정 UI 테스트
 
-3. **기본 동작**:
-   - 위 조건에 해당하지 않으면 false 반환 (건너뛰지 않음)
-
-**통과한 테스트**:
-- ✅ "2월 28일은 건너뜀 (매월 31일 반복)"
-- ✅ "3월 31일은 생성 (매월 31일 반복)"
-- ✅ "평년 2/28은 건너뜀 (매년 2/29 반복)"
-- ✅ "윤년 2/29는 생성 (매년 2/29 반복)"
-- ✅ "일반 날짜는 건너뛰지 않음"
-
----
-
-## 검증 결과
-
-### 테스트 실행
-
-```bash
-pnpm test
+```
+ Test Files  1 passed (1)
+      Tests  22 passed (22)
 ```
 
-**결과**:
-- Test Files: 12 passed (12)
-- Tests: 131 passed (131)
-- Duration: 14.24s
+모든 8개의 반복 일정 UI 테스트 통과:
+1. ✅ 반복 유형 Select가 존재하고 5개 옵션이 있다
+2. ✅ '반복 안함' 선택 시 추가 필드가 표시되지 않는다
+3. ✅ '매일' 선택 시 반복 간격과 종료일 필드가 표시된다
+4. ✅ 반복 간격 필드는 min 속성이 1이다
+5. ✅ 반복 종료일 필드는 max 속성이 2025-12-31이다
+6. ✅ '매주' 선택 시 추가 필드가 표시된다
+7. ✅ '매월' 선택 시 추가 필드가 표시된다
+8. ✅ '매년' 선택 시 추가 필드가 표시된다
 
-**신규 통과 테스트**: 5개
-- shouldSkipDate: 5개
-
-### 린트 검사
+## 린트 검사
 
 ```bash
 pnpm run lint
 ```
 
-**결과**:
-- Errors: 0
-- Warnings: 1 (기존 useNotifications 경고, 현재 작업과 무관)
+**결과**: ✅ **통과** (warning 1개만 있음, error 없음)
 
----
+## 구현 고려사항
+
+1. **TextField with label 패턴**
+   - Material-UI TextField의 label prop 사용
+   - getByLabelText가 자동으로 작동
+   - 별도의 FormLabel + htmlFor 불필요
+
+2. **조건부 렌더링**
+   - `repeatType !== 'none'` 조건으로 추가 필드 표시
+   - Fragment (`<>`) 사용하여 불필요한 DOM 노드 최소화
+
+3. **HTML 속성**
+   - TextField의 slotProps.htmlInput으로 min, max 전달
+   - 브라우저 기본 유효성 검사 활용
 
 ## 다음 단계 (REFACTOR Phase)
 
-다음을 검토합니다:
+### 검토 항목
 
-1. 코드 중복 제거 가능성
-2. 함수명 개선
-3. 타입 안전성 강화
-4. 주석 개선
+1. 코드 중복 제거
+2. 변수명 개선
+3. 주석 추가 (필요 시)
+4. 함수 분리 (필요 시)
 
----
+### 검증 기준 (REFACTOR Gate)
 
-## 완료 확인
+- ✅ 모든 테스트 여전히 통과
+- ✅ 린트 검사 통과
+- ✅ 타입 오류 없음
 
-- ✅ 모든 테스트 통과 (131/131)
-- ✅ 린트 검사 통과 (0 errors)
-- ✅ 타입 체크 통과
-- ✅ 구현 코드가 테스트 요구사항 충족
-- ✅ RED Phase에서 정의한 함수 구현 완료
+## 체크리스트
 
-GREEN Phase 완료!
+- [x] RepeatType import 활성화
+- [x] Setter 활성화 (setRepeatType, setRepeatInterval, setRepeatEndDate)
+- [x] 반복 유형 Select 구현
+- [x] 반복 간격 TextField 구현 (조건부)
+- [x] 반복 종료일 TextField 구현 (조건부)
+- [x] 모든 테스트 통과 (160개)
+- [x] 린트 검사 통과
+- [x] 출력 문서 작성
+
+## 요약
+
+Cycle 5 GREEN Phase 완료:
+- 반복 설정 UI 컴포넌트 구현
+- 조건부 렌더링 (repeatType !== 'none')
+- HTML 속성 (min, max) 설정
+- 모든 테스트 통과 (160개)
+- 다음 단계: REFACTOR Phase로 이동
