@@ -10,6 +10,39 @@ function formatDateToISO(date: Date): string {
 }
 
 /**
+ * Date 객체를 YYYY-MM-DD 형식 문자열로 변환합니다.
+ * @param date - 변환할 Date 객체
+ * @returns YYYY-MM-DD 형식의 날짜 문자열
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function formatDate(date: Date): string {
+  // TODO: GREEN 단계에서 구현
+  return '';
+}
+
+/**
+ * 날짜의 요일을 반환합니다.
+ * @param date - 확인할 날짜
+ * @returns 0(일요일)부터 6(토요일)까지의 숫자
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function getDayOfWeek(date: Date): number {
+  // TODO: GREEN 단계에서 구현
+  return -1;
+}
+
+/**
+ * 주어진 연도가 윤년인지 판단합니다.
+ * @param year - 확인할 연도
+ * @returns 윤년이면 true, 평년이면 false
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function isLeapYear(year: number): boolean {
+  // TODO: GREEN 단계에서 구현
+  return false;
+}
+
+/**
  * 반복 일정의 모든 인스턴스를 생성합니다.
  * @param event - 원본 Event (반복 정보 포함)
  * @returns 생성된 모든 인스턴스 배열
