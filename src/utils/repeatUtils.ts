@@ -1,15 +1,6 @@
 import { Event } from '../types';
 
 /**
- * Date 객체를 ISO 8601 형식(YYYY-MM-DD)의 문자열로 변환합니다.
- * @param date - 변환할 Date 객체
- * @returns ISO 8601 형식의 날짜 문자열
- */
-function formatDateToISO(date: Date): string {
-  return date.toISOString().split('T')[0];
-}
-
-/**
  * Date 객체를 YYYY-MM-DD 형식 문자열로 변환합니다.
  * @param date - 변환할 Date 객체
  * @returns YYYY-MM-DD 형식의 날짜 문자열
@@ -63,7 +54,7 @@ export function generateRepeatInstances(event: Event): Event[] {
     while (currentDate <= endDate) {
       instances.push({
         ...event,
-        date: formatDateToISO(currentDate),
+        date: formatDate(currentDate),
       });
 
       currentDate.setDate(currentDate.getDate() + interval);
