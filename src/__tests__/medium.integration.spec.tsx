@@ -1001,7 +1001,7 @@ describe('반복 일정 수정/삭제 Dialog', () => {
     await screen.findByText('해당 일정만 삭제하시겠어요?');
 
     // 3. "아니오" 클릭 → 전체 삭제
-    await user.click(screen.getAllByRole('button', { name: '아니오' })[1]); // 두 번째 "아니오" (삭제 Dialog)
+    await user.click(screen.getByRole('button', { name: '아니오' }));
 
     // 4. 모든 반복 일정이 삭제되어야 함
     await act(async () => {

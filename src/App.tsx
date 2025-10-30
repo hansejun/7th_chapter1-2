@@ -115,6 +115,7 @@ function App() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedEventForDialog, setSelectedEventForDialog] = useState<Event | null>(null);
+  const [isEditingAllRepeats, setIsEditingAllRepeats] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -137,9 +138,10 @@ function App() {
   const handleEditAll = () => {
     if (selectedEventForDialog) {
       setIsEditDialogOpen(false);
+      setIsEditingAllRepeats(true);
       // 전체 수정: 그대로 editEvent 호출
       editEvent(selectedEventForDialog);
-      setSelectedEventForDialog(null);
+      // selectedEventForDialog는 유지 (저장 시 필요)
     }
   };
 
@@ -152,11 +154,17 @@ function App() {
     }
   };
 
-  const handleDeleteAll = () => {
+  const handleDeleteAll = async () => {
     if (selectedEventForDialog && selectedEventForDialog.repeat.id) {
-      // 전체 삭제: repeatId로 모든 이벤트 삭제
-      // TODO: Cycle 9에서 구현
       setIsDeleteDialogOpen(false);
+      // 전체 삭제: repeatId로 모든 이벤트 찾아서 삭제
+      const repeatId = selectedEventForDialog.repeat.id;
+      const eventsToDelete = events.filter((e) => e.repeat.id === repeatId);
+
+      for (const event of eventsToDelete) {
+        await deleteEvent(event.id);
+      }
+
       setSelectedEventForDialog(null);
     }
   };
@@ -188,6 +196,29 @@ function App() {
       },
       notificationTime,
     };
+
+    // 전체 수정 모드인 경우
+    if (isEditingAllRepeats && selectedEventForDialog && selectedEventForDialog.repeat.id) {
+      const repeatId = selectedEventForDialog.repeat.id;
+      const eventsToUpdate = events.filter((e) => e.repeat.id === repeatId);
+
+      for (const event of eventsToUpdate) {
+        await saveEvent({
+          ...eventData,
+          id: event.id,
+          date: event.date, // 각 이벤트의 날짜는 유지
+          repeat: {
+            ...eventData.repeat,
+            id: repeatId, // repeat.id 유지
+          },
+        });
+      }
+
+      setIsEditingAllRepeats(false);
+      setSelectedEventForDialog(null);
+      resetForm();
+      return;
+    }
 
     const overlapping = findOverlappingEvents(eventData, events);
     if (overlapping.length > 0) {
