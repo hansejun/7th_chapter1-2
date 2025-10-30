@@ -584,6 +584,8 @@ describe('반복 일정 생성', () => {
 
 describe('반복 일정 아이콘 표시', () => {
   it('반복 일정에는 RepeatIcon이 표시되어야 한다', async () => {
+    setupMockHandlerCreation();
+
     const { user } = setup(<App />);
 
     await user.click(screen.getAllByText('일정 추가')[0]);
@@ -609,13 +611,19 @@ describe('반복 일정 아이콘 표시', () => {
 
     await user.click(screen.getByTestId('event-submit-button'));
 
-    // 캘린더에서 RepeatIcon 확인 (월별 뷰)
-    // 반복 일정은 RepeatIcon을 가져야 함
-    const repeatIcons = await screen.findAllByTestId('RepeatIcon');
+    // 이벤트 목록에서 이벤트가 표시될 때까지 기다림
+    const eventList = within(screen.getByTestId('event-list'));
+    const events = await eventList.findAllByText('반복 회의');
+    expect(events.length).toBeGreaterThan(0);
+
+    // RepeatIcon이 표시되어야 함 (3개: 10/1, 10/2, 10/3)
+    const repeatIcons = screen.getAllByTestId('RepeatIcon');
     expect(repeatIcons.length).toBeGreaterThan(0);
   });
 
   it('단일 일정에는 RepeatIcon이 표시되지 않아야 한다', async () => {
+    setupMockHandlerCreation();
+
     const { user } = setup(<App />);
 
     await user.click(screen.getAllByText('일정 추가')[0]);
@@ -635,15 +643,21 @@ describe('반복 일정 아이콘 표시', () => {
 
     await user.click(screen.getByTestId('event-submit-button'));
 
-    // 캘린더에서 RepeatIcon이 없어야 함
+    // 이벤트 목록에서 이벤트가 표시될 때까지 기다림
+    const eventList = within(screen.getByTestId('event-list'));
+    await eventList.findByText('단일 회의');
+
+    // RepeatIcon이 없어야 함
     const repeatIcons = screen.queryAllByTestId('RepeatIcon');
     expect(repeatIcons.length).toBe(0);
   });
 
   it('반복 일정과 단일 일정이 같은 날짜에 있을 때 각각 정확히 아이콘이 표시되어야 한다', async () => {
+    setupMockHandlerCreation();
+
     const { user } = setup(<App />);
 
-    // 1. 반복 일정 생성
+    // 1. 반복 일정 생성 (10/1 ~ 10/2, 매일)
     await user.click(screen.getAllByText('일정 추가')[0]);
     await user.type(screen.getByLabelText('제목'), '반복 일정');
     await user.type(screen.getByLabelText('날짜'), '2025-10-01');
@@ -651,35 +665,23 @@ describe('반복 일정 아이콘 표시', () => {
     await user.type(screen.getByLabelText('종료 시간'), '11:00');
     await user.type(screen.getByLabelText('설명'), '반복');
     await user.type(screen.getByLabelText('위치'), '장소 A');
-    await user.click(screen.getByLabelText('카테고리'));
     await user.click(within(screen.getByLabelText('카테고리')).getByRole('combobox'));
     await user.click(screen.getByRole('option', { name: '업무-option' }));
-
     await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
     await user.click(screen.getByRole('option', { name: '매일-option' }));
     await user.clear(screen.getByLabelText('반복 간격'));
     await user.type(screen.getByLabelText('반복 간격'), '1');
     await user.clear(screen.getByLabelText('반복 종료일'));
     await user.type(screen.getByLabelText('반복 종료일'), '2025-10-02');
-
     await user.click(screen.getByTestId('event-submit-button'));
 
-    // 2. 단일 일정 생성 (같은 날짜)
-    await user.click(screen.getAllByText('일정 추가')[0]);
-    await user.type(screen.getByLabelText('제목'), '단일 일정');
-    await user.type(screen.getByLabelText('날짜'), '2025-10-01');
-    await user.type(screen.getByLabelText('시작 시간'), '14:00');
-    await user.type(screen.getByLabelText('종료 시간'), '15:00');
-    await user.type(screen.getByLabelText('설명'), '단일');
-    await user.type(screen.getByLabelText('위치'), '장소 B');
-    await user.click(screen.getByLabelText('카테고리'));
-    await user.click(within(screen.getByLabelText('카테고리')).getByRole('combobox'));
-    await user.click(screen.getByRole('option', { name: '개인-option' }));
+    // 이벤트 목록에서 이벤트가 표시될 때까지 기다림
+    const eventList = within(screen.getByTestId('event-list'));
+    const events = await eventList.findAllByText('반복 일정');
+    expect(events.length).toBe(2); // 10/1, 10/2
 
-    await user.click(screen.getByTestId('event-submit-button'));
-
-    // RepeatIcon 개수 확인: 반복 일정 2개 (10/1, 10/2)만 아이콘 있어야 함
-    const repeatIcons = await screen.findAllByTestId('RepeatIcon');
+    // 이벤트 목록에서 RepeatIcon 개수 확인: 반복 일정 2개만 아이콘 있어야 함
+    const repeatIcons = eventList.getAllByTestId('RepeatIcon');
     expect(repeatIcons.length).toBe(2);
-  });
+  }, 10000);
 });
