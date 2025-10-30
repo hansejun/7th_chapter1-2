@@ -94,7 +94,53 @@ pnpm test
 **성공 시**:
 
 - Status 업데이트: RED ✅
+- **커밋 검증 및 생성** (다음 섹션 참조)
 - GREEN Phase로 이동
+
+---
+
+#### 1-1. RED Phase 커밋 검증 및 생성 ⭐ 필수
+
+**RED Phase 완료 후 즉시 실행:**
+
+1. **최근 커밋 확인**
+
+```bash
+git log -1 --oneline
+```
+
+2. **커밋 메시지에 [RED] 태그가 있는지 확인**
+   - 있으면 → 서브 에이전트가 정상적으로 커밋함 → 다음 Phase로
+   - 없으면 → 직접 커밋 생성 (아래 단계 실행)
+
+3. **커밋 생성**
+
+```bash
+git add src/__tests__/**/*.spec.ts* docs/outputs/red-test-writer-output.md
+git commit -m "$(cat <<'EOF'
+feat: [RED] <scope> <테스트 이름>
+
+- 작성된 테스트 요약
+- 의도적 실패 확인
+- 다음 단계: GREEN 구현 필요
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+EOF
+)"
+```
+
+**주의**: `<scope>`와 `<테스트 이름>`은 실제 작업 내용에 맞게 대체
+
+4. **커밋 생성 확인**
+
+```bash
+git log -1 --oneline --grep="\[RED\]"
+```
+
+- 커밋이 생성되었으면 GREEN Phase로 이동
+- 커밋 실패 시 사용자에게 알림
 
 ---
 
@@ -126,7 +172,53 @@ pnpm run lint  # 린트 검사 통과 확인
 **성공 시**:
 
 - Status 업데이트: GREEN ✅
+- **커밋 검증 및 생성** (다음 섹션 참조)
 - REFACTOR Phase로 이동
+
+---
+
+#### 2-1. GREEN Phase 커밋 검증 및 생성 ⭐ 필수
+
+**GREEN Phase 완료 후 즉시 실행:**
+
+1. **최근 커밋 확인**
+
+```bash
+git log -1 --oneline
+```
+
+2. **커밋 메시지에 [GREEN] 태그가 있는지 확인**
+   - 있으면 → 서브 에이전트가 정상적으로 커밋함 → 다음 Phase로
+   - 없으면 → 직접 커밋 생성 (아래 단계 실행)
+
+3. **커밋 생성**
+
+```bash
+git add src/**/*.ts src/**/*.tsx docs/outputs/green-implementer-output.md
+git commit -m "$(cat <<'EOF'
+feat: [GREEN] <scope> <구현 내용>
+
+- 구현한 기능 요약
+- 테스트 통과 확인 (X/X)
+- 다음 단계: REFACTOR
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+EOF
+)"
+```
+
+**주의**: `<scope>`와 `<구현 내용>`은 실제 작업 내용에 맞게 대체
+
+4. **커밋 생성 확인**
+
+```bash
+git log -1 --oneline --grep="\[GREEN\]"
+```
+
+- 커밋이 생성되었으면 REFACTOR Phase로 이동
+- 커밋 실패 시 사용자에게 알림
 
 ---
 
@@ -158,7 +250,62 @@ pnpm run lint  # 린트 검사 통과 확인
 **성공 시**:
 
 - Status 업데이트: REFACTOR ✅
+- **커밋 검증 및 생성** (다음 섹션 참조)
 - 사이클 완료
+
+---
+
+#### 3-1. REFACTOR Phase 커밋 검증 및 생성 ⭐ 필수
+
+**REFACTOR Phase 완료 후 즉시 실행:**
+
+1. **최근 커밋 확인**
+
+```bash
+git log -1 --oneline
+```
+
+2. **커밋 메시지에 [REFACTOR] 태그가 있는지 확인**
+   - 있으면 → 서브 에이전트가 정상적으로 커밋함 → 다음 Phase로
+   - 없으면 → 직접 커밋 생성 (아래 단계 실행)
+
+3. **변경사항 확인**
+
+```bash
+git status --short
+```
+
+- 변경사항이 없으면 → 리팩토링이 수행되지 않음 → 커밋 생성 스킵
+- 변경사항이 있으면 → 커밋 생성 (아래 단계 실행)
+
+4. **커밋 생성** (변경사항이 있는 경우에만)
+
+```bash
+git add src/**/*.ts src/**/*.tsx docs/outputs/refactor-engineer-output.md
+git commit -m "$(cat <<'EOF'
+refactor: [REFACTOR] <scope> <리팩토링 내용>
+
+- 수행한 리팩토링 요약
+- 모든 테스트 여전히 통과 (X/X)
+- Cycle 완료
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+EOF
+)"
+```
+
+**주의**: `<scope>`와 `<리팩토링 내용>`은 실제 작업 내용에 맞게 대체
+
+5. **커밋 생성 확인**
+
+```bash
+git log -1 --oneline
+```
+
+- 커밋이 생성되었거나 변경사항이 없으면 다음 사이클로 이동
+- 커밋 실패 시 사용자에게 알림
 
 ---
 
