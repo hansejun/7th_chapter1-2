@@ -137,3 +137,48 @@ export function generateRepeatInstances(event: Event): Event[] {
 
   return instances;
 }
+
+/**
+ * 반복 일정의 모든 인스턴스를 생성합니다. (EventForm 기반)
+ * @param eventForm - 사용자 입력 (date, repeat.type, repeat.interval 포함)
+ * @param endDate - 반복 종료 날짜 (YYYY-MM-DD, 최대 2025-12-31)
+ * @returns 개별 이벤트 배열 (id 제외)
+ */
+export function generateRecurringInstances(
+  eventForm: import('../types').EventForm,
+  endDate: string
+): Omit<Event, 'id'>[] {
+  const instances: Omit<Event, 'id'>[] = [];
+
+  // 반복이 없는 경우 원본 이벤트만 반환
+  if (eventForm.repeat.type === 'none') {
+    return [eventForm];
+  }
+
+  const baseDate = new Date(eventForm.date);
+  const maxDate = new Date(endDate);
+  const interval = eventForm.repeat.interval || 1;
+
+  // 첫 이벤트 무조건 추가
+  instances.push({ ...eventForm, date: formatDate(baseDate) });
+
+  let currentDate = new Date(baseDate);
+
+  // 다음 발생일 계산 반복
+  while (true) {
+    const nextDate = getNextOccurrence(currentDate, eventForm.repeat.type, interval, baseDate);
+
+    if (!nextDate || nextDate > maxDate) break;
+
+    // 날짜 건너뛰기 체크 (31일, 윤년)
+    if (shouldSkipDate(nextDate, eventForm.repeat.type, baseDate.getDate(), baseDate.getMonth())) {
+      currentDate = nextDate;
+      continue;
+    }
+
+    instances.push({ ...eventForm, date: formatDate(nextDate) });
+    currentDate = nextDate;
+  }
+
+  return instances;
+}
