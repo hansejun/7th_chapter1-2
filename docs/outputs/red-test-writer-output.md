@@ -1,14 +1,14 @@
-# RED 단계 테스트 작업 내역 - Cycle 1
+# RED 단계 테스트 작업 내역 - Cycle 2
 
 > **메타데이터**
 >
-> - Agent: red-test-writer
+> - Agent: tdd-orchestrator (직접 작성)
 > - Status: completed
-> - Timestamp: 2025-10-31T10:20:00Z
-> - Input Source: docs/outputs/spec-analyzer-output.md (Cycle 1)
-> - Total Tests: 3개 (formatDate, getDayOfWeek, isLeapYear)
-> - Completed Tests: 3개
-> - Progress: 3/3 (100%)
+> - Timestamp: 2025-10-31T04:28:00Z
+> - Input Source: docs/outputs/spec-analyzer-output.md (Cycle 2)
+> - Total Tests: 5개 (shouldSkipDate)
+> - Completed Tests: 5개
+> - Progress: 5/5 (100%)
 > - Test File: src/__tests__/unit/easy.repeatUtils.spec.ts
 > - Implementation File: src/utils/repeatUtils.ts (함수 stub 추가)
 
@@ -16,15 +16,17 @@
 
 ## 전체 작업 범위 체크리스트
 
-Cycle 1 기준: 날짜 유틸리티 함수
+Cycle 2 기준: shouldSkipDate 함수
 
-### A. 날짜 유틸리티 함수 (repeatUtils) - 3/3 완료 ✅
+### A. shouldSkipDate 함수 테스트 - 5/5 완료 ✅
 
-- [x] A-1: formatDate - Date 객체를 YYYY-MM-DD 형식으로 변환 → `#a-1`
-- [x] A-2: getDayOfWeek - 날짜의 요일 반환 (0=일요일, 6=토요일) → `#a-2`
-- [x] A-3: isLeapYear - 윤년 판단 (4/100/400 규칙) → `#a-3`
+- [x] A-1: 2월 28일은 건너뜀 (매월 31일 반복) → `#a-1`
+- [x] A-2: 3월 31일은 생성 (매월 31일 반복) → `#a-2`
+- [x] A-3: 평년 2/28은 건너뜀 (매년 2/29 반복) → `#a-3`
+- [x] A-4: 윤년 2/29는 생성 (매년 2/29 반복) → `#a-4`
+- [x] A-5: 일반 날짜는 건너뛰지 않음 → `#a-5`
 
-**진행 상황**: 3/3 완료 (100%) ✅
+**진행 상황**: 5/5 완료 (100%) ✅
 
 ---
 
@@ -314,33 +316,36 @@ export function isLeapYear(year: number): boolean {
 
 ### 테스트 실행 결과
 
-- 총 테스트: 126개
-- 통과: 118개
-- 실패: 8개 (formatDate 3개 + getDayOfWeek 3개 + isLeapYear 2개)
-- Baseline 대비: +8 실패 (Baseline: 116 passed, 0 failed)
+- 총 테스트: 131개
+- 통과: 129개
+- 실패: 2개 (shouldSkipDate 2개)
+- Baseline 대비: +2 실패 (Baseline: 126 passed, 0 failed)
 
 ### 실패 유형
 
 - ✅ 모든 실패가 Assertion 기반 (타입/런타임 에러 없음)
-- ✅ 각 테스트가 단일 원인으로만 실패
+- ✅ expected false to be true (미구현으로 인한 의도적 실패)
 - ✅ 실패 메시지가 요구사항을 명확히 설명
 
-### 린트 검사
+### 실패 테스트 목록
 
-- ✅ 통과 (errors: 0, warnings: 4)
+1. "2월 28일은 건너뜀 (매월 31일 반복)" - expected false to be true
+2. "평년 2/28은 건너뜀 (매년 2/29 반복)" - expected false to be true
 
-### 파일 인코딩
+### 성공 테스트 목록 (false 반환하는 케이스, 스텁이 false 반환하므로 통과)
 
-- ✅ UTF-8 확인
+1. "3월 31일은 생성 (매월 31일 반복)" - ✅
+2. "윤년 2/29는 생성 (매년 2/29 반복)" - ✅
+3. "일반 날짜는 건너뛰지 않음" - ✅
 
 ---
 
 ## 다음 단계 (GREEN Phase)
 
-green-implementer 에이전트가 다음을 구현합니다:
+다음을 구현합니다:
 
-1. formatDate 함수 구현
-2. getDayOfWeek 함수 구현
-3. isLeapYear 함수 구현
+1. shouldSkipDate 함수 구현 (src/utils/repeatUtils.ts)
+   - 매월 31일 반복 로직
+   - 매년 2/29 반복 로직 (윤년 체크)
 
 모든 테스트가 통과하도록 구현 후 GREEN Phase 완료.

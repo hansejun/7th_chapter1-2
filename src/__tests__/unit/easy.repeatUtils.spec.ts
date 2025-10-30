@@ -1,11 +1,12 @@
 import { describe, it, expect } from 'vitest';
 
-import { Event } from '../../types';
+import { Event, RepeatType } from '../../types';
 import {
   generateRepeatInstances,
   formatDate,
   getDayOfWeek,
   isLeapYear,
+  shouldSkipDate,
 } from '../../utils/repeatUtils';
 
 describe('generateRepeatInstances', () => {
@@ -136,6 +137,75 @@ describe('isLeapYear', () => {
   it('1900년은 100으로 나누어떨어지지만 400으로는 안되므로 평년(false)이다', () => {
     // Act
     const result = isLeapYear(1900);
+
+    // Assert
+    expect(result).toBe(false);
+  });
+});
+
+describe('shouldSkipDate', () => {
+  it('2월 28일은 건너뜀 (매월 31일 반복)', () => {
+    // Arrange
+    const date = new Date('2025-02-28');
+    const repeatType: RepeatType = 'monthly';
+    const baseDay = 31;
+
+    // Act
+    const result = shouldSkipDate(date, repeatType, baseDay);
+
+    // Assert
+    expect(result).toBe(true);
+  });
+
+  it('3월 31일은 생성 (매월 31일 반복)', () => {
+    // Arrange
+    const date = new Date('2025-03-31');
+    const repeatType: RepeatType = 'monthly';
+    const baseDay = 31;
+
+    // Act
+    const result = shouldSkipDate(date, repeatType, baseDay);
+
+    // Assert
+    expect(result).toBe(false);
+  });
+
+  it('평년 2/28은 건너뜀 (매년 2/29 반복)', () => {
+    // Arrange
+    const date = new Date('2025-02-28');
+    const repeatType: RepeatType = 'yearly';
+    const baseDay = 29;
+    const baseMonth = 1; // 2월 (0-based)
+
+    // Act
+    const result = shouldSkipDate(date, repeatType, baseDay, baseMonth);
+
+    // Assert
+    expect(result).toBe(true);
+  });
+
+  it('윤년 2/29는 생성 (매년 2/29 반복)', () => {
+    // Arrange
+    const date = new Date('2024-02-29');
+    const repeatType: RepeatType = 'yearly';
+    const baseDay = 29;
+    const baseMonth = 1; // 2월 (0-based)
+
+    // Act
+    const result = shouldSkipDate(date, repeatType, baseDay, baseMonth);
+
+    // Assert
+    expect(result).toBe(false);
+  });
+
+  it('일반 날짜는 건너뛰지 않음', () => {
+    // Arrange
+    const date = new Date('2025-01-15');
+    const repeatType: RepeatType = 'daily';
+    const baseDay = 15;
+
+    // Act
+    const result = shouldSkipDate(date, repeatType, baseDay);
 
     // Assert
     expect(result).toBe(false);

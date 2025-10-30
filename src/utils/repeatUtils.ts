@@ -31,6 +31,24 @@ export function isLeapYear(year: number): boolean {
 }
 
 /**
+ * 특정 날짜가 반복 규칙에 따라 건너뛰어야 하는지 판단합니다.
+ * @param date - 체크할 날짜
+ * @param repeatType - 반복 유형
+ * @param baseDay - 기준일 (1-31)
+ * @param baseMonth - 기준월 (0-11, 매년 반복 시 사용)
+ * @returns true면 건너뜀, false면 생성
+ */
+export function shouldSkipDate(
+  date: Date,
+  repeatType: string,
+  baseDay: number,
+  baseMonth?: number
+): boolean {
+  // TODO: 구현 필요
+  return false;
+}
+
+/**
  * 반복 일정의 모든 인스턴스를 생성합니다.
  * @param event - 원본 Event (반복 정보 포함)
  * @returns 생성된 모든 인스턴스 배열
