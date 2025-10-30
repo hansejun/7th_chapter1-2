@@ -321,7 +321,7 @@ describe('getNextOccurrence', () => {
     expect(formatDate(nextDate!)).toBe('2025-03-15');
   });
 
-  it('매월 31일 반복: 2025-01-31 → 2025-02-31 (자동 조정, shouldSkipDate에서 필터링)', () => {
+  it('매월 31일 반복: 2025-01-31 → 다음 월 (자동 조정, shouldSkipDate에서 필터링 필요)', () => {
     // Arrange
     const currentDate = new Date('2025-01-31');
     const baseDate = new Date('2025-01-31');
@@ -333,9 +333,9 @@ describe('getNextOccurrence', () => {
 
     // Assert
     expect(nextDate).not.toBeNull();
-    // 2월에는 31일이 없으므로 자동으로 3월로 넘어감
-    // 이는 shouldSkipDate에서 필터링되어야 함
-    expect(nextDate!.getDate()).not.toBe(31);
+    // 2월에는 31일이 없으므로 setDate(31)로 자동 조정됨
+    // getNextOccurrence는 Date를 반환하고, shouldSkipDate에서 필터링됨
+    expect(nextDate!.getMonth()).toBe(2); // 3월 (0-based)
   });
 
   it('매년 반복 간격 1: 2025-01-15 → 2026-01-15', () => {

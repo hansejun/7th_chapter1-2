@@ -71,8 +71,37 @@ export function getNextOccurrence(
   interval: number,
   baseDate: Date
 ): Date | null {
-  // TODO: 구현 필요 (RED 단계 - 의도적 실패)
-  return null;
+  switch (repeatType) {
+    case 'daily':
+      // 매일 반복: 현재 날짜 + interval일
+      return new Date(currentDate.getTime() + interval * 24 * 60 * 60 * 1000);
+
+    case 'weekly':
+      // 매주 반복: 현재 날짜 + interval주 (7 * interval일)
+      return new Date(currentDate.getTime() + interval * 7 * 24 * 60 * 60 * 1000);
+
+    case 'monthly': {
+      // 매월 반복: 현재 날짜의 월 + interval, 일자는 기준일로 설정
+      const nextMonth = new Date(currentDate);
+      nextMonth.setMonth(nextMonth.getMonth() + interval);
+      nextMonth.setDate(baseDate.getDate()); // 기준일로 설정
+      return nextMonth;
+    }
+
+    case 'yearly': {
+      // 매년 반복: 현재 날짜의 연 + interval, 월일은 기준 날짜로 설정
+      const nextYear = new Date(currentDate);
+      nextYear.setFullYear(nextYear.getFullYear() + interval);
+      nextYear.setMonth(baseDate.getMonth());
+      nextYear.setDate(baseDate.getDate());
+      return nextYear;
+    }
+
+    case 'none':
+    default:
+      // 반복 없음
+      return null;
+  }
 }
 
 /**
