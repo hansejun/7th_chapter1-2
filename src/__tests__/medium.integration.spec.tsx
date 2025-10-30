@@ -685,3 +685,191 @@ describe('반복 일정 아이콘 표시', () => {
     expect(repeatIcons.length).toBe(2);
   }, 10000);
 });
+
+describe('반복 일정 수정/삭제 Dialog', () => {
+  it('반복 일정 수정 버튼 클릭 시 "해당 일정만 수정하시겠어요?" Dialog가 표시되어야 한다', async () => {
+    setupMockHandlerCreation();
+
+    const { user } = setup(<App />);
+
+    // 1. 반복 일정 생성 (10/1 ~ 10/3, 매일)
+    await user.click(screen.getAllByText('일정 추가')[0]);
+    await user.type(screen.getByLabelText('제목'), '반복 미팅');
+    await user.type(screen.getByLabelText('날짜'), '2025-10-01');
+    await user.type(screen.getByLabelText('시작 시간'), '10:00');
+    await user.type(screen.getByLabelText('종료 시간'), '11:00');
+    await user.type(screen.getByLabelText('설명'), '테스트');
+    await user.type(screen.getByLabelText('위치'), '회의실');
+    await user.click(within(screen.getByLabelText('카테고리')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '업무-option' }));
+    await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '매일-option' }));
+    await user.clear(screen.getByLabelText('반복 간격'));
+    await user.type(screen.getByLabelText('반복 간격'), '1');
+    await user.clear(screen.getByLabelText('반복 종료일'));
+    await user.type(screen.getByLabelText('반복 종료일'), '2025-10-03');
+    await user.click(screen.getByTestId('event-submit-button'));
+
+    // 이벤트가 생성될 때까지 기다림
+    const eventList = within(screen.getByTestId('event-list'));
+    await eventList.findAllByText('반복 미팅');
+
+    // 2. 10/2 이벤트 클릭하여 수정 모드 진입
+    const oct2Events = eventList.getAllByText('반복 미팅');
+    await user.click(oct2Events[1]); // 10/2 이벤트 (두 번째)
+
+    // 3. 수정 버튼 클릭
+    await user.click(screen.getByRole('button', { name: '수정' }));
+
+    // 4. Dialog 표시 확인
+    expect(await screen.findByText('해당 일정만 수정하시겠어요?')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '예' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '아니오' })).toBeInTheDocument();
+  }, 10000);
+
+  it('반복 일정 삭제 버튼 클릭 시 "해당 일정만 삭제하시겠어요?" Dialog가 표시되어야 한다', async () => {
+    setupMockHandlerCreation();
+
+    const { user } = setup(<App />);
+
+    // 1. 반복 일정 생성 (10/1 ~ 10/3, 매일)
+    await user.click(screen.getAllByText('일정 추가')[0]);
+    await user.type(screen.getByLabelText('제목'), '반복 미팅');
+    await user.type(screen.getByLabelText('날짜'), '2025-10-01');
+    await user.type(screen.getByLabelText('시작 시간'), '10:00');
+    await user.type(screen.getByLabelText('종료 시간'), '11:00');
+    await user.type(screen.getByLabelText('설명'), '테스트');
+    await user.type(screen.getByLabelText('위치'), '회의실');
+    await user.click(within(screen.getByLabelText('카테고리')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '업무-option' }));
+    await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '매일-option' }));
+    await user.clear(screen.getByLabelText('반복 간격'));
+    await user.type(screen.getByLabelText('반복 간격'), '1');
+    await user.clear(screen.getByLabelText('반복 종료일'));
+    await user.type(screen.getByLabelText('반복 종료일'), '2025-10-03');
+    await user.click(screen.getByTestId('event-submit-button'));
+
+    // 이벤트가 생성될 때까지 기다림
+    const eventList = within(screen.getByTestId('event-list'));
+    await eventList.findAllByText('반복 미팅');
+
+    // 2. 10/2 이벤트 클릭
+    const oct2Events = eventList.getAllByText('반복 미팅');
+    await user.click(oct2Events[1]); // 10/2 이벤트
+
+    // 3. 삭제 버튼 클릭
+    await user.click(screen.getByRole('button', { name: '삭제' }));
+
+    // 4. Dialog 표시 확인
+    expect(await screen.findByText('해당 일정만 삭제하시겠어요?')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '예' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '아니오' })).toBeInTheDocument();
+  }, 10000);
+
+  it('단일 수정 Dialog에서 "예" 선택 시 해당 일정만 수정되고 단일 일정으로 전환되어야 한다', async () => {
+    setupMockHandlerCreation();
+    setupMockHandlerUpdating();
+
+    const { user } = setup(<App />);
+
+    // 1. 반복 일정 생성 (10/1 ~ 10/3, 매일)
+    await user.click(screen.getAllByText('일정 추가')[0]);
+    await user.type(screen.getByLabelText('제목'), '반복 미팅');
+    await user.type(screen.getByLabelText('날짜'), '2025-10-01');
+    await user.type(screen.getByLabelText('시작 시간'), '10:00');
+    await user.type(screen.getByLabelText('종료 시간'), '11:00');
+    await user.type(screen.getByLabelText('설명'), '테스트');
+    await user.type(screen.getByLabelText('위치'), '회의실');
+    await user.click(within(screen.getByLabelText('카테고리')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '업무-option' }));
+    await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '매일-option' }));
+    await user.clear(screen.getByLabelText('반복 간격'));
+    await user.type(screen.getByLabelText('반복 간격'), '1');
+    await user.clear(screen.getByLabelText('반복 종료일'));
+    await user.type(screen.getByLabelText('반복 종료일'), '2025-10-03');
+    await user.click(screen.getByTestId('event-submit-button'));
+
+    // 이벤트가 생성될 때까지 기다림
+    const eventList = within(screen.getByTestId('event-list'));
+    await eventList.findAllByText('반복 미팅');
+
+    // 2. 10/2 이벤트 클릭하여 수정
+    const oct2Events = eventList.getAllByText('반복 미팅');
+    await user.click(oct2Events[1]); // 10/2 이벤트
+
+    // 3. 수정 버튼 클릭 → Dialog 표시
+    await user.click(screen.getByRole('button', { name: '수정' }));
+    await screen.findByText('해당 일정만 수정하시겠어요?');
+
+    // 4. "예" 클릭 → 단일 수정 모드
+    await user.click(screen.getByRole('button', { name: '예' }));
+
+    // 5. 수정 폼이 열리고 반복 유형이 'none'으로 변경되어야 함
+    expect(await screen.findByDisplayValue('반복 미팅')).toBeInTheDocument();
+
+    // 반복 유형 확인: Select 컴포넌트의 텍스트가 "반복 안함"이어야 함
+    const repeatTypeSelect = within(screen.getByLabelText('반복 유형')).getByRole('combobox');
+    expect(repeatTypeSelect).toHaveTextContent('반복 안함');
+
+    // 6. 제목 수정 후 저장
+    await user.clear(screen.getByLabelText('제목'));
+    await user.type(screen.getByLabelText('제목'), '단일 미팅');
+    await user.click(screen.getByTestId('event-submit-button'));
+
+    // 7. 수정된 이벤트 확인: "단일 미팅"이 표시되고 RepeatIcon이 없어야 함
+    await screen.findByText('단일 미팅');
+    const updatedEventContainer = eventList.getByText('단일 미팅').closest('li');
+    expect(updatedEventContainer).toBeInTheDocument();
+    expect(within(updatedEventContainer!).queryByTestId('RepeatIcon')).not.toBeInTheDocument();
+  }, 15000);
+
+  it('단일 삭제 Dialog에서 "예" 선택 시 해당 일정만 삭제되어야 한다', async () => {
+    setupMockHandlerCreation();
+    setupMockHandlerDeletion();
+
+    const { user } = setup(<App />);
+
+    // 1. 반복 일정 생성 (10/1 ~ 10/3, 매일)
+    await user.click(screen.getAllByText('일정 추가')[0]);
+    await user.type(screen.getByLabelText('제목'), '반복 미팅');
+    await user.type(screen.getByLabelText('날짜'), '2025-10-01');
+    await user.type(screen.getByLabelText('시작 시간'), '10:00');
+    await user.type(screen.getByLabelText('종료 시간'), '11:00');
+    await user.type(screen.getByLabelText('설명'), '테스트');
+    await user.type(screen.getByLabelText('위치'), '회의실');
+    await user.click(within(screen.getByLabelText('카테고리')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '업무-option' }));
+    await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '매일-option' }));
+    await user.clear(screen.getByLabelText('반복 간격'));
+    await user.type(screen.getByLabelText('반복 간격'), '1');
+    await user.clear(screen.getByLabelText('반복 종료일'));
+    await user.type(screen.getByLabelText('반복 종료일'), '2025-10-03');
+    await user.click(screen.getByTestId('event-submit-button'));
+
+    // 이벤트가 생성될 때까지 기다림
+    const eventList = within(screen.getByTestId('event-list'));
+    const initialEvents = await eventList.findAllByText('반복 미팅');
+    expect(initialEvents.length).toBe(3); // 10/1, 10/2, 10/3
+
+    // 2. 10/2 이벤트 클릭
+    await user.click(initialEvents[1]); // 10/2 이벤트
+
+    // 3. 삭제 버튼 클릭 → Dialog 표시
+    await user.click(screen.getByRole('button', { name: '삭제' }));
+    await screen.findByText('해당 일정만 삭제하시겠어요?');
+
+    // 4. "예" 클릭 → 단일 삭제
+    await user.click(screen.getByRole('button', { name: '예' }));
+
+    // 5. 10/2만 삭제되고 10/1, 10/3은 유지
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    });
+
+    const remainingEvents = eventList.queryAllByText('반복 미팅');
+    expect(remainingEvents.length).toBe(2); // 10/1, 10/3만 남음
+  }, 15000);
+});
