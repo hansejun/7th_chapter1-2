@@ -2,6 +2,25 @@
 
 이 파일은 이 저장소의 코드를 작업할 때 Claude Code (claude.ai/code)에게 가이드를 제공합니다.
 
+## 테스트 코드 작성 전 반드시 참고
+
+- **server.js** : Express 기반의 개발용 로컬 API 서버. 이벤트 CRUD(생성/조회/수정/삭제), 반복 이벤트 관리, 다중 이벤트 처리 등의 엔드포인트를 제공합니다. `TEST_ENV` 환경변수에 따라 `e2e.json` 또는 `realEvents.json`을 데이터베이스로 사용합니다.
+
+- **src/**mocks**/handlers.ts** : MSW(Mock Service Worker)의 기본 HTTP 핸들러를 정의합니다. 단위 테스트에서 실제 API 호출을 가로채고 모킹된 응답을 반환하기 위한 핸들러들을 포함합니다.
+
+- **src/**mocks**/handlerUtils.ts** : 통합 테스트에서 사용하는 MSW 핸들러 유틸리티 함수들을 제공합니다. 각 테스트 시나리오에 맞는 동적 모킹 핸들러를 설정할 수 있습니다.
+<!-- @ -->
+- **src/setupTests.ts** : Vitest 테스트 환경의 전역 설정 파일입니다. MSW 서버 초기화, 타임존 설정(UTC), Fake Timer 설정, 테스트 전후 훅(`beforeAll`, `beforeEach`, `afterEach`, `afterAll`)을 관리합니다. 모든 테스트가 일관된 환경에서 실행되도록 보장합니다.
+
+- **src/**tests\*\*\*\* : 테스트 파일들이 위치한 디렉토리입니다. `hooks/` (커스텀 훅 테스트), `unit/` (유틸리티 함수 단위 테스트), 그리고 `medium.integration.spec.tsx` (통합 테스트)로 구조화되어 있습니다. `utils.ts`는 테스트에서 공통으로 사용하는 헬퍼 함수들을 포함합니다.
+
+- **Select 컴포넌트 접근 예시**
+
+```jsx
+await user.click(within(screen.getByLabelText('카테고리')).getByRole('combobox'));
+await user.click(screen.getByRole('option', { name: `${category}-option` }));
+```
+
 ## 프로젝트 개요
 
 반복 이벤트 기능을 갖춘 React 기반 캘린더 애플리케이션입니다. AI 지원을 통한 테스트 주도 개발(TDD) 실습에 초점을 프로젝트 입니다.
