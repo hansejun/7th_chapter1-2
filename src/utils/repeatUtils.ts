@@ -14,10 +14,11 @@ function formatDateToISO(date: Date): string {
  * @param date - 변환할 Date 객체
  * @returns YYYY-MM-DD 형식의 날짜 문자열
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function formatDate(date: Date): string {
-  // TODO: GREEN 단계에서 구현
-  return '';
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 /**
@@ -25,10 +26,8 @@ export function formatDate(date: Date): string {
  * @param date - 확인할 날짜
  * @returns 0(일요일)부터 6(토요일)까지의 숫자
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function getDayOfWeek(date: Date): number {
-  // TODO: GREEN 단계에서 구현
-  return -1;
+  return date.getDay();
 }
 
 /**
@@ -36,10 +35,8 @@ export function getDayOfWeek(date: Date): number {
  * @param year - 확인할 연도
  * @returns 윤년이면 true, 평년이면 false
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function isLeapYear(year: number): boolean {
-  // TODO: GREEN 단계에서 구현
-  return false;
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 }
 
 /**
