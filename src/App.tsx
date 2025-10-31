@@ -119,6 +119,38 @@ function App() {
 
   const { enqueueSnackbar } = useSnackbar();
 
+  // 폼 상태를 EventData로 변환하는 헬퍼 함수
+  const buildEventData = (): Event | EventForm => ({
+    id: editingEvent ? editingEvent.id : undefined,
+    title,
+    date,
+    startTime,
+    endTime,
+    description,
+    location,
+    category,
+    repeat: {
+      type: repeatType,
+      interval: repeatInterval,
+      endDate: repeatEndDate || undefined,
+    },
+    notificationTime,
+  });
+
+  // 반복 타입 변경 핸들러
+  const handleRepeatTypeChange = (newType: RepeatType) => {
+    setRepeatType(newType);
+    setIsRepeating(newType !== 'none');
+  };
+
+  // 겹침 경고 후 저장 처리
+  const handleSaveWithOverlap = async () => {
+    setIsOverlapDialogOpen(false);
+    const eventData = buildEventData();
+    await saveEvent(eventData);
+    resetForm();
+  };
+
   const handleEditSingle = () => {
     if (selectedEventForDialog) {
       setIsEditDialogOpen(false);
@@ -180,22 +212,7 @@ function App() {
       return;
     }
 
-    const eventData: Event | EventForm = {
-      id: editingEvent ? editingEvent.id : undefined,
-      title,
-      date,
-      startTime,
-      endTime,
-      description,
-      location,
-      category,
-      repeat: {
-        type: repeatType,
-        interval: repeatInterval,
-        endDate: repeatEndDate || undefined,
-      },
-      notificationTime,
-    };
+    const eventData = buildEventData();
 
     // 전체 수정 모드인 경우
     if (isEditingAllRepeats && selectedEventForDialog && selectedEventForDialog.repeat.id) {
@@ -533,11 +550,7 @@ function App() {
             <Select
               size="small"
               value={repeatType}
-              onChange={(e) => {
-                const newType = e.target.value as RepeatType;
-                setRepeatType(newType);
-                setIsRepeating(newType !== 'none');
-              }}
+              onChange={(e) => handleRepeatTypeChange(e.target.value as RepeatType)}
               aria-labelledby="repeat-type-label"
               aria-label="반복 유형"
             >
@@ -733,28 +746,7 @@ function App() {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setIsOverlapDialogOpen(false)}>취소</Button>
-          <Button
-            color="error"
-            onClick={() => {
-              setIsOverlapDialogOpen(false);
-              saveEvent({
-                id: editingEvent ? editingEvent.id : undefined,
-                title,
-                date,
-                startTime,
-                endTime,
-                description,
-                location,
-                category,
-                repeat: {
-                  type: repeatType,
-                  interval: repeatInterval,
-                  endDate: repeatEndDate || undefined,
-                },
-                notificationTime,
-              });
-            }}
-          >
+          <Button color="error" onClick={handleSaveWithOverlap}>
             계속 진행
           </Button>
         </DialogActions>
