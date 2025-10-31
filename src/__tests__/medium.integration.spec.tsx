@@ -5,7 +5,6 @@ import { UserEvent, userEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { SnackbarProvider } from 'notistack';
 import { ReactElement } from 'react';
-import { debug } from 'vitest-preview';
 
 import {
   setupMockHandlerCreation,
@@ -505,7 +504,6 @@ describe('반복 일정 생성', () => {
     // 5개 이벤트가 생성되어야 함 (10/1 ~ 10/5)
     const eventList = within(screen.getByTestId('event-list'));
     const events = await eventList.findAllByText('매일 회의');
-    debug();
 
     expect(events).toHaveLength(5);
   });
