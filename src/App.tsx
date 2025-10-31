@@ -190,7 +190,7 @@ function App() {
       location,
       category,
       repeat: {
-        type: isRepeating ? repeatType : 'none',
+        type: repeatType,
         interval: repeatInterval,
         endDate: repeatEndDate || undefined,
       },
@@ -533,7 +533,11 @@ function App() {
             <Select
               size="small"
               value={repeatType}
-              onChange={(e) => setRepeatType(e.target.value as RepeatType)}
+              onChange={(e) => {
+                const newType = e.target.value as RepeatType;
+                setRepeatType(newType);
+                setIsRepeating(newType !== 'none');
+              }}
               aria-labelledby="repeat-type-label"
               aria-label="반복 유형"
             >
@@ -743,7 +747,7 @@ function App() {
                 location,
                 category,
                 repeat: {
-                  type: isRepeating ? repeatType : 'none',
+                  type: repeatType,
                   interval: repeatInterval,
                   endDate: repeatEndDate || undefined,
                 },
