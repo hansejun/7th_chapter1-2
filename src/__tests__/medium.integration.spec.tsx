@@ -5,6 +5,7 @@ import { UserEvent, userEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { SnackbarProvider } from 'notistack';
 import { ReactElement } from 'react';
+import { debug } from 'vitest-preview';
 
 import {
   setupMockHandlerCreation,
@@ -504,6 +505,8 @@ describe('반복 일정 생성', () => {
     // 5개 이벤트가 생성되어야 함 (10/1 ~ 10/5)
     const eventList = within(screen.getByTestId('event-list'));
     const events = await eventList.findAllByText('매일 회의');
+    debug();
+
     expect(events).toHaveLength(5);
   });
 
@@ -581,8 +584,183 @@ describe('반복 일정 생성', () => {
     // 현재 10월 뷰에서는 1개만 표시됨
     expect(events.length).toBeGreaterThanOrEqual(1);
   });
+
+  it('31일 시작 매월 반복 시 31일 없는 달에는 생성되지 않는다', async () => {
+    setupMockHandlerCreation();
+
+    const { user } = setup(<App />);
+
+    await user.click(screen.getAllByText('일정 추가')[0]);
+
+    await user.type(screen.getByLabelText('제목'), '월말 일정');
+    await user.type(screen.getByLabelText('날짜'), '2025-10-31');
+    await user.type(screen.getByLabelText('시작 시간'), '10:00');
+    await user.type(screen.getByLabelText('종료 시간'), '11:00');
+    await user.type(screen.getByLabelText('설명'), '매월 31일 일정');
+    await user.type(screen.getByLabelText('위치'), '회의실 D');
+    await user.click(screen.getByLabelText('카테고리'));
+    await user.click(within(screen.getByLabelText('카테고리')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '업무-option' }));
+
+    await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '매월-option' }));
+    await user.clear(screen.getByLabelText('반복 간격'));
+    await user.type(screen.getByLabelText('반복 간격'), '1');
+    await user.clear(screen.getByLabelText('반복 종료일'));
+    await user.type(screen.getByLabelText('반복 종료일'), '2025-12-31');
+
+    await user.click(screen.getByTestId('event-submit-button'));
+
+    const eventList = within(screen.getByTestId('event-list'));
+    const octEvents = await eventList.findAllByText('월말 일정');
+    expect(octEvents).toHaveLength(1); // 10/31
+
+    // 11월에는 31일이 없어 생성되지 않아야 한다
+    await user.click(screen.getByLabelText('Next'));
+    expect(eventList.queryAllByText('월말 일정').length).toBe(0);
+
+    // 12월 31일에는 생성되어야 한다
+    await user.click(screen.getByLabelText('Next'));
+    const decEvents = await eventList.findAllByText('월말 일정');
+    expect(decEvents).toHaveLength(1);
+  });
+
+  it('매년 반복 일정 생성 시 매년 같은 날짜에 생성된다', async () => {
+    setupMockHandlerCreation();
+
+    const { user } = setup(<App />);
+
+    await user.click(screen.getAllByText('일정 추가')[0]);
+
+    await user.type(screen.getByLabelText('제목'), '연간 기념일');
+    await user.type(screen.getByLabelText('날짜'), '2025-10-05');
+    await user.type(screen.getByLabelText('시작 시간'), '09:00');
+    await user.type(screen.getByLabelText('종료 시간'), '10:00');
+    await user.type(screen.getByLabelText('설명'), '매년 같은 날');
+    await user.type(screen.getByLabelText('위치'), '로비');
+    await user.click(screen.getByLabelText('카테고리'));
+    await user.click(within(screen.getByLabelText('카테고리')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '업무-option' }));
+
+    await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '매년-option' }));
+    await user.clear(screen.getByLabelText('반복 간격'));
+    await user.type(screen.getByLabelText('반복 간격'), '1');
+    await user.clear(screen.getByLabelText('반복 종료일'));
+    await user.type(screen.getByLabelText('반복 종료일'), '2027-10-05');
+
+    await user.click(screen.getByTestId('event-submit-button'));
+
+    const eventList = within(screen.getByTestId('event-list'));
+    const y2025 = await eventList.findAllByText('연간 기념일');
+    expect(y2025).toHaveLength(1);
+
+    // 2026년 10월로 이동
+    for (let i = 0; i < 12; i++) {
+      await user.click(screen.getByLabelText('Next'));
+    }
+    const y2026 = await eventList.findAllByText('연간 기념일');
+    expect(y2026).toHaveLength(1);
+
+    // 2027년 10월로 이동
+    for (let i = 0; i < 12; i++) {
+      await user.click(screen.getByLabelText('Next'));
+    }
+    const y2027 = await eventList.findAllByText('연간 기념일');
+    expect(y2027).toHaveLength(1);
+  });
 });
 
+describe('반복 일정 엣지 케이스', () => {
+  it('윤년 2월 29일 시작 매년 반복은 윤년(2028)에만 생성된다', async () => {
+    setupMockHandlerCreation();
+
+    const { user } = setup(<App />);
+
+    await user.click(screen.getAllByText('일정 추가')[0]);
+
+    await user.type(screen.getByLabelText('제목'), '윤년 일정');
+    await user.type(screen.getByLabelText('날짜'), '2024-02-29');
+    await user.type(screen.getByLabelText('시작 시간'), '08:00');
+    await user.type(screen.getByLabelText('종료 시간'), '09:00');
+    await user.type(screen.getByLabelText('설명'), '윤년만 생성');
+    await user.type(screen.getByLabelText('위치'), '회의실 E');
+    await user.click(screen.getByLabelText('카테고리'));
+    await user.click(within(screen.getByLabelText('카테고리')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '업무-option' }));
+
+    await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '매년-option' }));
+    await user.clear(screen.getByLabelText('반복 간격'));
+    await user.type(screen.getByLabelText('반복 간격'), '1');
+    await user.clear(screen.getByLabelText('반복 종료일'));
+    await user.type(screen.getByLabelText('반복 종료일'), '2028-12-31');
+
+    await user.click(screen.getByTestId('event-submit-button'));
+
+    const eventList = within(screen.getByTestId('event-list'));
+
+    // 2025년 2월로 이동 (현재 2025-10 기준)
+    for (let i = 0; i < 8; i++) {
+      await user.click(screen.getByLabelText('Previous'));
+    }
+    expect(eventList.queryAllByText('윤년 일정').length).toBe(0);
+
+    // 2028년 2월로 이동 (2025-02에서 +36개월)
+    for (let i = 0; i < 36; i++) {
+      await user.click(screen.getByLabelText('Next'));
+    }
+    const leap = await eventList.findAllByText('윤년 일정');
+    expect(leap).toHaveLength(1);
+  }, 30000);
+
+  it('겹침 무시: 동일 시간대 단일+반복 일정이 모두 표시된다', async () => {
+    setupMockHandlerCreation();
+
+    const { user } = setup(<App />);
+    const eventList = within(screen.getByTestId('event-list'));
+
+    // 단일 일정 생성
+    await saveSchedule(user, {
+      title: '단일 겹침',
+      date: '2025-10-10',
+      startTime: '10:00',
+      endTime: '11:00',
+      description: '겹침 단일',
+      location: 'A',
+      category: '업무',
+    });
+
+    // 반복 일정 생성 (동일한 시간대)
+    await user.click(screen.getAllByText('일정 추가')[0]);
+    await user.type(screen.getByLabelText('제목'), '반복 겹침');
+    await user.type(screen.getByLabelText('날짜'), '2025-10-10');
+    await user.type(screen.getByLabelText('시작 시간'), '10:00');
+    await user.type(screen.getByLabelText('종료 시간'), '11:00');
+    await user.type(screen.getByLabelText('설명'), '겹침 반복');
+    await user.type(screen.getByLabelText('위치'), 'A');
+    await user.click(screen.getByLabelText('카테고리'));
+    await user.click(within(screen.getByLabelText('카테고리')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '업무-option' }));
+    await user.click(within(screen.getByLabelText('반복 유형')).getByRole('combobox'));
+    await user.click(screen.getByRole('option', { name: '매일-option' }));
+    await user.clear(screen.getByLabelText('반복 간격'));
+    await user.type(screen.getByLabelText('반복 간격'), '1');
+    await user.clear(screen.getByLabelText('반복 종료일'));
+    await user.type(screen.getByLabelText('반복 종료일'), '2025-10-12');
+
+    await user.click(screen.getByTestId('event-submit-button'));
+
+    // 겹침 경고 Dialog → 계속 진행
+    await screen.findByText('일정 겹침 경고');
+    await user.click(screen.getByRole('button', { name: '계속 진행' }));
+
+    const single = await eventList.findAllByText('단일 겹침');
+    expect(single).toHaveLength(1);
+    const repeats = await eventList.findAllByText('반복 겹침');
+    expect(repeats).toHaveLength(3); // 10/10, 10/11, 10/12
+  });
+});
 describe('반복 일정 아이콘 표시', () => {
   it('반복 일정에는 RepeatIcon이 표시되어야 한다', async () => {
     // 초기 데이터로 3건의 반복 인스턴스 주입 (같은 repeat.id)
@@ -873,6 +1051,40 @@ describe('반복 일정 수정/삭제 Dialog', () => {
 
     const remainingEvents = eventList.queryAllByText('반복 미팅');
     expect(remainingEvents.length).toBeLessThan(initialEvents.length); // 일부 삭제됨
+  }, 20000);
+
+  it('단일 삭제 시 정확히 해당 인스턴스만 제거되고 나머지는 유지된다', async () => {
+    setupMockHandlerCRUD(DIALOG_REPEAT_EVENTS);
+
+    const { user } = setup(<App />);
+
+    const eventList = within(screen.getByTestId('event-list'));
+    const before = await eventList.findAllByText('반복 미팅');
+    expect(before.length).toBe(3);
+
+    // 10/2 인스턴스 삭제
+    const deleteButtons = eventList.getAllByLabelText('Delete event');
+    await user.click(deleteButtons[1]);
+    await screen.findByText('해당 일정만 삭제하시겠어요?');
+    await user.click(screen.getByRole('button', { name: '예' }));
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    });
+
+    const after = eventList.queryAllByText('반복 미팅');
+    expect(after.length).toBe(2);
+
+    // 남은 항목 중 2025-10-02 날짜가 없어야 한다
+    for (const node of after) {
+      const container = node.closest('div[class*="MuiBox"]') as HTMLElement | null;
+      expect(container).toBeInTheDocument();
+      expect(within(container!).queryByText('2025-10-02')).not.toBeInTheDocument();
+    }
+
+    // 10/01, 10/03은 남아 있어야 한다
+    expect(screen.getAllByText('2025-10-01').length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText('2025-10-03').length).toBeGreaterThanOrEqual(1);
   }, 20000);
 
   it('전체 수정 Dialog에서 "아니오" 선택 시 모든 반복 일정이 수정되고 반복 아이콘이 유지되어야 한다', async () => {
