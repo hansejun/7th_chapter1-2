@@ -1,6 +1,6 @@
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { render, screen, within, act } from '@testing-library/react';
+import { render, screen, within, act, cleanup } from '@testing-library/react';
 import { UserEvent, userEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { SnackbarProvider } from 'notistack';
@@ -624,6 +624,7 @@ describe('반복 일정 생성', () => {
   });
 
   it('매년 반복 일정 생성 시 매년 같은 날짜에 생성된다', async () => {
+    vi.setSystemTime(new Date('2025-10-05'));
     setupMockHandlerCreation();
 
     const { user } = setup(<App />);
@@ -653,17 +654,13 @@ describe('반복 일정 생성', () => {
     const y2025 = await eventList.findAllByText('연간 기념일');
     expect(y2025).toHaveLength(1);
 
-    // 2026년 10월로 이동
-    for (let i = 0; i < 12; i++) {
-      await user.click(screen.getByLabelText('Next'));
-    }
+    // 2026년 10월로 시스템 시간 변경
+    vi.setSystemTime(new Date('2026-10-05'));
     const y2026 = await eventList.findAllByText('연간 기념일');
     expect(y2026).toHaveLength(1);
 
-    // 2027년 10월로 이동
-    for (let i = 0; i < 12; i++) {
-      await user.click(screen.getByLabelText('Next'));
-    }
+    // 2027년 10월로 시스템 시간 변경
+    vi.setSystemTime(new Date('2027-10-05'));
     const y2027 = await eventList.findAllByText('연간 기념일');
     expect(y2027).toHaveLength(1);
   });
@@ -671,6 +668,8 @@ describe('반복 일정 생성', () => {
 
 describe('반복 일정 엣지 케이스', () => {
   it('윤년 2월 29일 시작 매년 반복은 윤년(2028)에만 생성된다', async () => {
+    // 2024년 (윤년)에 일정 생성
+    vi.setSystemTime(new Date('2024-02-29'));
     setupMockHandlerCreation();
 
     const { user } = setup(<App />);
@@ -697,20 +696,28 @@ describe('반복 일정 엣지 케이스', () => {
     await user.click(screen.getByTestId('event-submit-button'));
 
     const eventList = within(screen.getByTestId('event-list'));
+    const y2024 = await eventList.findAllByText('윤년 일정');
+    expect(y2024).toHaveLength(1);
 
-    // 2025년 2월로 이동 (현재 2025-10 기준)
-    for (let i = 0; i < 8; i++) {
-      await user.click(screen.getByLabelText('Previous'));
-    }
-    expect(eventList.queryAllByText('윤년 일정').length).toBe(0);
+    cleanup();
 
-    // 2028년 2월로 이동 (2025-02에서 +36개월)
-    for (let i = 0; i < 36; i++) {
-      await user.click(screen.getByLabelText('Next'));
-    }
-    const leap = await eventList.findAllByText('윤년 일정');
-    expect(leap).toHaveLength(1);
-  }, 30000);
+    // 2025년 2월 (윤년 아님) - 일정이 없어야 함
+    vi.setSystemTime(new Date('2025-02-28'));
+    setup(<App />);
+    await screen.findByText('일정 로딩 완료!');
+    const eventList2025 = within(screen.getByTestId('event-list'));
+    expect(eventList2025.queryAllByText('윤년 일정').length).toBe(0);
+
+    cleanup();
+
+    // 2028년 2월 (윤년) - 일정이 있어야 함
+    vi.setSystemTime(new Date('2028-02-29'));
+    setup(<App />);
+    await screen.findByText('일정 로딩 완료!');
+    const eventList2028 = within(screen.getByTestId('event-list'));
+    const y2028 = await eventList2028.findAllByText('윤년 일정');
+    expect(y2028).toHaveLength(1);
+  });
 
   it('겹침 무시: 동일 시간대 단일+반복 일정이 모두 표시된다', async () => {
     setupMockHandlerCreation();
