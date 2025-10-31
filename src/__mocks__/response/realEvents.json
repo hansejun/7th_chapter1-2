@@ -1,1 +1,586 @@
-{"events":[{"id":"2b7545a6-ebee-426c-b906-2329bc8d62bd","title":"팀 회의","date":"2025-10-20","startTime":"10:00","endTime":"11:00","description":"주간 팀 미팅","location":"회의실 A","category":"업무","repeat":{"type":"none","interval":0},"notificationTime":1},{"id":"09702fb3-a478-40b3-905e-9ab3c8849dcd","title":"점심 약속","date":"2025-10-21","startTime":"12:30","endTime":"13:30","description":"동료와 점심 식사","location":"회사 근처 식당","category":"개인","repeat":{"type":"none","interval":0},"notificationTime":1},{"id":"da3ca408-836a-4d98-b67a-ca389d07552b","title":"프로젝트 마감","date":"2025-10-25","startTime":"09:00","endTime":"18:00","description":"분기별 프로젝트 마감","location":"사무실","category":"업무","repeat":{"type":"none","interval":0},"notificationTime":1},{"id":"dac62941-69e5-4ec0-98cc-24c2a79a7f81","title":"생일 파티","date":"2025-10-28","startTime":"19:00","endTime":"22:00","description":"친구 생일 축하","location":"친구 집","category":"개인","repeat":{"type":"none","interval":0},"notificationTime":1},{"id":"80d85368-b4a4-47b3-b959-25171d49371f","title":"운동","date":"2025-10-22","startTime":"18:00","endTime":"19:00","description":"주간 운동","location":"헬스장","category":"개인","repeat":{"type":"none","interval":0},"notificationTime":1},{"id":"b18d0f46-f659-450d-a9b8-a5f0368898b3","title":"매일 회의","date":"2025-10-01","startTime":"09:00","endTime":"10:00","description":"매일 진행하는 회의","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-05","id":"4136d3ec-2399-4f68-815d-cc39149ae727"},"notificationTime":10},{"id":"af6c1fe6-1a3b-4bc0-a8d0-08f6f8861787","title":"매일 회의","date":"2025-10-02","startTime":"09:00","endTime":"10:00","description":"매일 진행하는 회의","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-05","id":"4136d3ec-2399-4f68-815d-cc39149ae727"},"notificationTime":10},{"id":"a468cb1e-25e6-4fd8-b87d-320bb1029d6b","title":"매일 회의","date":"2025-10-03","startTime":"09:00","endTime":"10:00","description":"매일 진행하는 회의","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-05","id":"4136d3ec-2399-4f68-815d-cc39149ae727"},"notificationTime":10},{"id":"c12c4b79-b071-4a52-90b1-12f7540539b1","title":"매일 회의","date":"2025-10-04","startTime":"09:00","endTime":"10:00","description":"매일 진행하는 회의","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-05","id":"4136d3ec-2399-4f68-815d-cc39149ae727"},"notificationTime":10},{"id":"2ff23be5-c8a3-478a-a259-b37cfc8d63b6","title":"매일 회의","date":"2025-10-05","startTime":"09:00","endTime":"10:00","description":"매일 진행하는 회의","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-05","id":"4136d3ec-2399-4f68-815d-cc39149ae727"},"notificationTime":10},{"id":"f7e96ccc-5b42-41ef-a663-3747879e250d","title":"주간 회의","date":"2025-10-06","startTime":"14:00","endTime":"15:00","description":"매주 진행하는 회의","location":"회의실 B","category":"업무","repeat":{"type":"weekly","interval":1,"endDate":"2025-10-31","id":"aeac072f-fc35-4c04-ae83-ce00b9097011"},"notificationTime":10},{"id":"d5b4548b-706e-4e90-964f-ca5bf0602d75","title":"주간 회의","date":"2025-10-13","startTime":"14:00","endTime":"15:00","description":"매주 진행하는 회의","location":"회의실 B","category":"업무","repeat":{"type":"weekly","interval":1,"endDate":"2025-10-31","id":"aeac072f-fc35-4c04-ae83-ce00b9097011"},"notificationTime":10},{"id":"af0ac27f-8188-440f-8fc4-93878a9f38ff","title":"주간 회의","date":"2025-10-20","startTime":"14:00","endTime":"15:00","description":"매주 진행하는 회의","location":"회의실 B","category":"업무","repeat":{"type":"weekly","interval":1,"endDate":"2025-10-31","id":"aeac072f-fc35-4c04-ae83-ce00b9097011"},"notificationTime":10},{"id":"1d90eb44-48a7-445c-a521-cd52c6df5c9c","title":"주간 회의","date":"2025-10-27","startTime":"14:00","endTime":"15:00","description":"매주 진행하는 회의","location":"회의실 B","category":"업무","repeat":{"type":"weekly","interval":1,"endDate":"2025-10-31","id":"aeac072f-fc35-4c04-ae83-ce00b9097011"},"notificationTime":10},{"id":"6b178c94-2c6c-4788-8aa7-bb2b501649d4","title":"매일 회의","date":"2025-10-01","startTime":"09:00","endTime":"10:00","description":"매일 진행하는 회의","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-05","id":"e4c7f883-30b4-438c-a3f6-e82be7e1db76"},"notificationTime":10},{"id":"fa1895ff-a0b1-4d98-aa0e-e8a60bc976cb","title":"매일 회의","date":"2025-10-02","startTime":"09:00","endTime":"10:00","description":"매일 진행하는 회의","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-05","id":"e4c7f883-30b4-438c-a3f6-e82be7e1db76"},"notificationTime":10},{"id":"cd1e799c-eb10-442b-a41a-edb0400e04b0","title":"매일 회의","date":"2025-10-03","startTime":"09:00","endTime":"10:00","description":"매일 진행하는 회의","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-05","id":"e4c7f883-30b4-438c-a3f6-e82be7e1db76"},"notificationTime":10},{"id":"84897bbb-858f-4144-b4f0-1b701d7b663d","title":"매일 회의","date":"2025-10-04","startTime":"09:00","endTime":"10:00","description":"매일 진행하는 회의","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-05","id":"e4c7f883-30b4-438c-a3f6-e82be7e1db76"},"notificationTime":10},{"id":"991d4704-2c4d-410a-8a8d-c6e64fc8e664","title":"매일 회의","date":"2025-10-05","startTime":"09:00","endTime":"10:00","description":"매일 진행하는 회의","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-05","id":"e4c7f883-30b4-438c-a3f6-e82be7e1db76"},"notificationTime":10},{"id":"08d09d89-805b-4d18-af39-a8ee80880dca","title":"월간 보고","date":"2025-10-15","startTime":"16:00","endTime":"17:00","description":"매월 15일 보고","location":"회의실 C","category":"업무","repeat":{"type":"monthly","interval":1,"endDate":"2025-12-31","id":"b12fc456-da1e-4327-b217-a24f3a4a8d6d"},"notificationTime":10},{"id":"71ff3184-6731-4c58-a03c-459e7c4673ab","title":"월간 보고","date":"2025-11-15","startTime":"16:00","endTime":"17:00","description":"매월 15일 보고","location":"회의실 C","category":"업무","repeat":{"type":"monthly","interval":1,"endDate":"2025-12-31","id":"b12fc456-da1e-4327-b217-a24f3a4a8d6d"},"notificationTime":10},{"id":"9e81c32b-a8c2-41f8-934a-28828c8f0855","title":"월간 보고","date":"2025-12-15","startTime":"16:00","endTime":"17:00","description":"매월 15일 보고","location":"회의실 C","category":"업무","repeat":{"type":"monthly","interval":1,"endDate":"2025-12-31","id":"b12fc456-da1e-4327-b217-a24f3a4a8d6d"},"notificationTime":10},{"id":"76eebfed-cc0d-44f4-9094-e5bfe109eeb2","title":"주간 회의","date":"2025-10-06","startTime":"14:00","endTime":"15:00","description":"매주 진행하는 회의","location":"회의실 B","category":"업무","repeat":{"type":"weekly","interval":1,"endDate":"2025-10-31","id":"403dfa23-82ab-404c-a392-e3069f5eed4d"},"notificationTime":10},{"id":"39124edf-42d6-4508-95f1-e5e2deef64a6","title":"주간 회의","date":"2025-10-13","startTime":"14:00","endTime":"15:00","description":"매주 진행하는 회의","location":"회의실 B","category":"업무","repeat":{"type":"weekly","interval":1,"endDate":"2025-10-31","id":"403dfa23-82ab-404c-a392-e3069f5eed4d"},"notificationTime":10},{"id":"1248fa93-4424-4724-9562-467cd630d451","title":"주간 회의","date":"2025-10-20","startTime":"14:00","endTime":"15:00","description":"매주 진행하는 회의","location":"회의실 B","category":"업무","repeat":{"type":"weekly","interval":1,"endDate":"2025-10-31","id":"403dfa23-82ab-404c-a392-e3069f5eed4d"},"notificationTime":10},{"id":"b2d477aa-c14c-4ea1-adc0-6545e90ba756","title":"주간 회의","date":"2025-10-27","startTime":"14:00","endTime":"15:00","description":"매주 진행하는 회의","location":"회의실 B","category":"업무","repeat":{"type":"weekly","interval":1,"endDate":"2025-10-31","id":"403dfa23-82ab-404c-a392-e3069f5eed4d"},"notificationTime":10},{"id":"ab0b72ee-b52d-41e0-afd1-a6e94c0fc61c","title":"월간 보고","date":"2025-10-15","startTime":"16:00","endTime":"17:00","description":"매월 15일 보고","location":"회의실 C","category":"업무","repeat":{"type":"monthly","interval":1,"endDate":"2025-12-31","id":"06e50937-2527-4122-9abf-434f38cab2df"},"notificationTime":10},{"id":"f63be73f-6448-4779-90a7-39df21aed45a","title":"월간 보고","date":"2025-11-15","startTime":"16:00","endTime":"17:00","description":"매월 15일 보고","location":"회의실 C","category":"업무","repeat":{"type":"monthly","interval":1,"endDate":"2025-12-31","id":"06e50937-2527-4122-9abf-434f38cab2df"},"notificationTime":10},{"id":"ec18f409-2d22-4af7-b9cd-668997fc11ae","title":"월간 보고","date":"2025-12-15","startTime":"16:00","endTime":"17:00","description":"매월 15일 보고","location":"회의실 C","category":"업무","repeat":{"type":"monthly","interval":1,"endDate":"2025-12-31","id":"06e50937-2527-4122-9abf-434f38cab2df"},"notificationTime":10},{"id":"38342342-664b-40a2-8974-84ab397a1097","title":"매일 회의","date":"2025-10-01","startTime":"09:00","endTime":"10:00","description":"매일 진행하는 회의","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-05","id":"a5c7fa95-af23-4552-866e-0ba4d2490647"},"notificationTime":10},{"id":"5a8146a3-c131-40d7-b1d7-90c9f9918b15","title":"매일 회의","date":"2025-10-02","startTime":"09:00","endTime":"10:00","description":"매일 진행하는 회의","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-05","id":"a5c7fa95-af23-4552-866e-0ba4d2490647"},"notificationTime":10},{"id":"948824b2-7359-4144-91aa-a76535da545b","title":"매일 회의","date":"2025-10-03","startTime":"09:00","endTime":"10:00","description":"매일 진행하는 회의","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-05","id":"a5c7fa95-af23-4552-866e-0ba4d2490647"},"notificationTime":10},{"id":"ded949d4-f940-4e3e-b1f7-de5623e7dcee","title":"매일 회의","date":"2025-10-04","startTime":"09:00","endTime":"10:00","description":"매일 진행하는 회의","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-05","id":"a5c7fa95-af23-4552-866e-0ba4d2490647"},"notificationTime":10},{"id":"e3c93141-7fd6-4adc-9532-091c89a622b1","title":"매일 회의","date":"2025-10-05","startTime":"09:00","endTime":"10:00","description":"매일 진행하는 회의","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-05","id":"a5c7fa95-af23-4552-866e-0ba4d2490647"},"notificationTime":10},{"id":"d3b4f280-e179-4a24-bc60-3182ecf9871f","title":"주간 회의","date":"2025-10-06","startTime":"14:00","endTime":"15:00","description":"매주 진행하는 회의","location":"회의실 B","category":"업무","repeat":{"type":"weekly","interval":1,"endDate":"2025-10-31","id":"857ac3dc-f67b-47b8-af03-34665fef3b7f"},"notificationTime":10},{"id":"7d708849-9ee7-479e-929a-b638c844d1da","title":"주간 회의","date":"2025-10-13","startTime":"14:00","endTime":"15:00","description":"매주 진행하는 회의","location":"회의실 B","category":"업무","repeat":{"type":"weekly","interval":1,"endDate":"2025-10-31","id":"857ac3dc-f67b-47b8-af03-34665fef3b7f"},"notificationTime":10},{"id":"d6cfa656-65c5-453e-ba9d-810843e61503","title":"주간 회의","date":"2025-10-20","startTime":"14:00","endTime":"15:00","description":"매주 진행하는 회의","location":"회의실 B","category":"업무","repeat":{"type":"weekly","interval":1,"endDate":"2025-10-31","id":"857ac3dc-f67b-47b8-af03-34665fef3b7f"},"notificationTime":10},{"id":"d246958d-060c-4200-9d76-b4836428e292","title":"주간 회의","date":"2025-10-27","startTime":"14:00","endTime":"15:00","description":"매주 진행하는 회의","location":"회의실 B","category":"업무","repeat":{"type":"weekly","interval":1,"endDate":"2025-10-31","id":"857ac3dc-f67b-47b8-af03-34665fef3b7f"},"notificationTime":10},{"id":"c3bb984f-85a0-4e35-830d-fb8141a97f9d","title":"월간 보고","date":"2025-10-15","startTime":"16:00","endTime":"17:00","description":"매월 15일 보고","location":"회의실 C","category":"업무","repeat":{"type":"monthly","interval":1,"endDate":"2025-12-31","id":"d09b1b93-69af-434a-b2e6-2b9480015f57"},"notificationTime":10},{"id":"32ad2ee4-497e-48b9-9e20-41246a322e33","title":"월간 보고","date":"2025-11-15","startTime":"16:00","endTime":"17:00","description":"매월 15일 보고","location":"회의실 C","category":"업무","repeat":{"type":"monthly","interval":1,"endDate":"2025-12-31","id":"d09b1b93-69af-434a-b2e6-2b9480015f57"},"notificationTime":10},{"id":"d05bab6b-b41a-40ab-b3eb-f78fc6da43c0","title":"월간 보고","date":"2025-12-15","startTime":"16:00","endTime":"17:00","description":"매월 15일 보고","location":"회의실 C","category":"업무","repeat":{"type":"monthly","interval":1,"endDate":"2025-12-31","id":"d09b1b93-69af-434a-b2e6-2b9480015f57"},"notificationTime":10},{"id":"e1e60700-0c90-4a0c-bb40-6fb35266e66e","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"5da21ff6-4972-4ee0-9ad7-74e06afd669b"},"notificationTime":10},{"id":"43704533-4a1b-4b10-b0a6-f91c853b9157","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"5da21ff6-4972-4ee0-9ad7-74e06afd669b"},"notificationTime":10},{"id":"dc9230f4-0446-4a14-8437-9c397195bb9b","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"5da21ff6-4972-4ee0-9ad7-74e06afd669b"},"notificationTime":10},{"id":"11eb57a9-f2ca-4ff2-b74b-657f992d088c","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"b394b46e-d453-42ff-b4ec-8d05655d5dee"},"notificationTime":10},{"id":"85e3885b-f3b6-49b2-9408-e18e978ad00b","title":"반복 일정","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"b394b46e-d453-42ff-b4ec-8d05655d5dee"},"notificationTime":10},{"id":"364782be-c17a-4e92-b501-8df874cba565","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"eca636b3-1641-47b4-b734-35bb4dca646d"},"notificationTime":10},{"id":"1ea7a79c-4c0a-413d-b930-40966bd210c9","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"eca636b3-1641-47b4-b734-35bb4dca646d"},"notificationTime":10},{"id":"d610bf5e-9ada-4f0b-a467-0feb4bee2535","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"eca636b3-1641-47b4-b734-35bb4dca646d"},"notificationTime":10},{"id":"afea0c86-e5c3-4e5d-8125-768e09a782eb","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"c1929a00-6c3d-4be2-ae21-2477b2dbd051"},"notificationTime":10},{"id":"a4d24493-7c72-4250-a083-4aba6ec5faa8","title":"반복 일정","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"c1929a00-6c3d-4be2-ae21-2477b2dbd051"},"notificationTime":10},{"id":"9f3815c2-57ef-4bb2-87cd-15aa8ae799d3","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"67c2833e-f608-4e20-84ab-18d228b83438"},"notificationTime":10},{"id":"25003773-e378-48d9-9958-624b9a8f355b","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"67c2833e-f608-4e20-84ab-18d228b83438"},"notificationTime":10},{"id":"3c1dc0d3-56c8-4a61-8472-a56183396981","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"67c2833e-f608-4e20-84ab-18d228b83438"},"notificationTime":10},{"id":"1e1e9dc3-4fb5-4209-bde4-288e12cf6b3c","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"eb3f4390-c3f9-4dc9-bf1b-1742c87d6756"},"notificationTime":10},{"id":"a337e822-caba-4d12-9068-749e840cee9d","title":"반복 일정","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"eb3f4390-c3f9-4dc9-bf1b-1742c87d6756"},"notificationTime":10},{"id":"3f7c88b2-6ce5-4c95-9049-35f2a5ae86e6","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"b051dd8b-3cbc-4c8b-a029-87e197c18a49"},"notificationTime":10},{"id":"ee80033e-b818-42f0-9a4a-12074fccb4b6","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"b051dd8b-3cbc-4c8b-a029-87e197c18a49"},"notificationTime":10},{"id":"03e897e9-c228-4a94-8087-f7a0602bbcbe","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"b051dd8b-3cbc-4c8b-a029-87e197c18a49"},"notificationTime":10},{"id":"5edf6a41-9e62-4dec-bcb3-f03129fa708e","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"5f000343-b4a3-4f59-a652-4ea452ce3198"},"notificationTime":10},{"id":"3559b1df-2fa1-42d6-b204-ce1f3ead90c9","title":"반복 일정","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"5f000343-b4a3-4f59-a652-4ea452ce3198"},"notificationTime":10},{"id":"20e4848a-07d7-4735-ad14-26fe0bee8665","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"e9bf6f35-ea60-47b7-9e72-5906a597ca28"},"notificationTime":10},{"id":"283a2dd8-209a-4785-930e-036602e63d07","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"e9bf6f35-ea60-47b7-9e72-5906a597ca28"},"notificationTime":10},{"id":"9f691a90-da1e-4a4f-ab82-a2400f0a5056","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"e9bf6f35-ea60-47b7-9e72-5906a597ca28"},"notificationTime":10},{"id":"fa68af42-f1a7-4a6b-9bce-c678a8422bac","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"3e028460-b5e7-4385-9b35-32d8bc3c3a77"},"notificationTime":10},{"id":"995b0e8b-573b-45f9-9f24-9cdc70e17064","title":"반복 일정","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"3e028460-b5e7-4385-9b35-32d8bc3c3a77"},"notificationTime":10},{"id":"d35d0786-c636-46bf-a103-78e09b077624","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"736bb2c4-a74f-4a00-a357-88da7c9a674e"},"notificationTime":10},{"id":"946f4ec4-28b1-45cf-822e-d48dbcadcdfd","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"736bb2c4-a74f-4a00-a357-88da7c9a674e"},"notificationTime":10},{"id":"676a100b-76dc-4274-844a-75687fa8a226","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"736bb2c4-a74f-4a00-a357-88da7c9a674e"},"notificationTime":10},{"id":"f2665493-b1f0-4990-b339-55bd2d987396","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"850f0d24-7a9c-4dc1-8614-bbcd28988b0e"},"notificationTime":10},{"id":"aa6c2b65-3d45-4da9-8518-f08ea9234d6b","title":"반복 일정","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"850f0d24-7a9c-4dc1-8614-bbcd28988b0e"},"notificationTime":10},{"id":"32d9528a-0f89-46cd-8604-66dbe473d4d0","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"7d4ac376-ad7c-4fb2-8d0f-ab60148d34de"},"notificationTime":10},{"id":"6001d5fa-7c25-4bfe-8f85-4c65815bd5c3","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"7d4ac376-ad7c-4fb2-8d0f-ab60148d34de"},"notificationTime":10},{"id":"c60253d8-f284-475a-b804-bdef05632389","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"7d4ac376-ad7c-4fb2-8d0f-ab60148d34de"},"notificationTime":10},{"id":"0f631024-e253-4de8-8225-a4e11af96f92","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"d909433b-3a1f-4871-b9eb-89daa17cd148"},"notificationTime":10},{"id":"ee217ce7-2df7-4b32-9894-4ff393f7e719","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"d909433b-3a1f-4871-b9eb-89daa17cd148"},"notificationTime":10},{"id":"172a20a7-1b6c-4c5c-a9eb-5a403c6bbbe6","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"d909433b-3a1f-4871-b9eb-89daa17cd148"},"notificationTime":10},{"id":"20494135-c94d-4db9-ae41-6df40083c2ae","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"7691d4b0-7d6a-4f6b-93ab-ff84a165b851"},"notificationTime":10},{"id":"2db042fa-a04b-442e-aa36-382ff0914234","title":"반복 일정","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"7691d4b0-7d6a-4f6b-93ab-ff84a165b851"},"notificationTime":10},{"id":"30dbf672-aec9-43fa-b6d8-b7e6b70e3df0","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"290557ad-3e66-4f9d-bf97-f92dffa92ddb"},"notificationTime":10},{"id":"971b8372-8be4-4c92-bd6c-903bf7f4549d","title":"반복 일정","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"290557ad-3e66-4f9d-bf97-f92dffa92ddb"},"notificationTime":10},{"id":"16c0a665-5f29-4c1e-bd01-b714f1ec3647","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"b4fe34d7-5034-47ad-baee-9c7bd6890d16"},"notificationTime":10},{"id":"7fa403e7-8c22-4826-8cb1-9306a66df1a3","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"b4fe34d7-5034-47ad-baee-9c7bd6890d16"},"notificationTime":10},{"id":"4979c932-46bd-4703-9b85-6c01cd99e307","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"b4fe34d7-5034-47ad-baee-9c7bd6890d16"},"notificationTime":10},{"id":"72edba2b-4746-41bf-a16e-86aebcb299a6","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"bd9a9532-ed32-4e8e-930f-78df236d9544"},"notificationTime":10},{"id":"02480d50-2ad1-43db-b33e-b7d13d22edc5","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"bd9a9532-ed32-4e8e-930f-78df236d9544"},"notificationTime":10},{"id":"f5f3e643-af90-431e-a03a-1be0c10db9ba","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"bd9a9532-ed32-4e8e-930f-78df236d9544"},"notificationTime":10},{"id":"98fbdeae-fcbf-47c0-8f68-4a07f9fc3558","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"8ddc8cc1-43aa-46f3-9835-b9fe6c7476a0"},"notificationTime":10},{"id":"56b3e6a2-23ab-408d-8f62-c8ccf943b43f","title":"반복 일정","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"8ddc8cc1-43aa-46f3-9835-b9fe6c7476a0"},"notificationTime":10},{"id":"fbaeb4d1-81b1-4b38-b717-597be317b2c7","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"1884826c-dc3f-4c20-928c-f09ffca8349d"},"notificationTime":10},{"id":"3f4f9208-25c6-4a9b-ac80-9cd7294a46a9","title":"반복 일정","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"1884826c-dc3f-4c20-928c-f09ffca8349d"},"notificationTime":10},{"id":"a90d3451-dcc2-4ca9-9457-bef56d412f7e","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"e828d74f-f6d9-4e8b-bd46-9c921e250a7f"},"notificationTime":10},{"id":"bd10dbec-232d-40bd-a9fd-f2dc5dc7a751","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"e828d74f-f6d9-4e8b-bd46-9c921e250a7f"},"notificationTime":10},{"id":"7385be03-ec6a-4ae1-a387-e31e55ac441d","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"e828d74f-f6d9-4e8b-bd46-9c921e250a7f"},"notificationTime":10},{"id":"2178572f-a288-425f-b4ab-62930a930331","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"fd2e3d29-bab9-4be2-b54d-c4fabd7e1f0a"},"notificationTime":10},{"id":"e9f5d059-1189-4041-a925-46f80df86b72","title":"반복 일정","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"fd2e3d29-bab9-4be2-b54d-c4fabd7e1f0a"},"notificationTime":10},{"id":"3a1a6b92-9886-4c02-8b76-a19a116e5dc0","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"f7dfab90-46fa-44dd-b06a-d9a107a5332f"},"notificationTime":10},{"id":"e20e4560-6be8-4901-9ffc-36f4c4acb44f","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"f7dfab90-46fa-44dd-b06a-d9a107a5332f"},"notificationTime":10},{"id":"e403480e-604e-4192-90b3-96f533ed296c","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"f7dfab90-46fa-44dd-b06a-d9a107a5332f"},"notificationTime":10},{"id":"93dade76-8dc0-4271-9733-8d95afadbdee","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"51aba17e-6428-4e69-9d5f-6a3202de7a95"},"notificationTime":10},{"id":"ab1f016f-04aa-4bbc-8f77-aa82cf78162d","title":"반복 일정","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"51aba17e-6428-4e69-9d5f-6a3202de7a95"},"notificationTime":10},{"id":"d46ffa63-bf1b-4204-a2f2-544acf0c693a","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"31fc6c07-9ff3-4b39-b47d-82754623f580"},"notificationTime":10},{"id":"139ff59b-6925-45a8-ac95-8800246faaa6","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"31fc6c07-9ff3-4b39-b47d-82754623f580"},"notificationTime":10},{"id":"f383fb73-8708-4f64-89b3-46258c85b881","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"31fc6c07-9ff3-4b39-b47d-82754623f580"},"notificationTime":10},{"id":"14c15083-bb9b-42ac-a001-888499adeea3","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"ca9cead4-6edc-443a-b39c-efae52d1a475"},"notificationTime":10},{"id":"287e8802-e9bf-497d-83d0-fbc3c99b2a53","title":"반복 일정","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"ca9cead4-6edc-443a-b39c-efae52d1a475"},"notificationTime":10},{"id":"dec3216a-6fc2-4514-a144-29cd89a47803","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"fa95e4c3-fef6-45fe-b158-35dde67e7dad"},"notificationTime":10},{"id":"222782e7-8e03-4170-afa7-754b9710738b","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"fa95e4c3-fef6-45fe-b158-35dde67e7dad"},"notificationTime":10},{"id":"9497a1fe-3f0f-4848-843f-2fdad242eddf","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"fa95e4c3-fef6-45fe-b158-35dde67e7dad"},"notificationTime":10},{"id":"f0f5a635-710f-4ed3-ad10-198c5f2249a9","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"64f7bab1-970d-485d-9397-ac3056d67694"},"notificationTime":10},{"id":"59dd79ac-c7a8-4c0b-baf3-cda89885f160","title":"반복 일정","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"64f7bab1-970d-485d-9397-ac3056d67694"},"notificationTime":10},{"id":"cfee83d5-7ccb-44c2-908d-5a941da75952","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"c310650a-fce0-4b68-9a3f-60d37c467e2a"},"notificationTime":10},{"id":"f38408a0-5fcd-45eb-9349-f10c3db761c1","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"c310650a-fce0-4b68-9a3f-60d37c467e2a"},"notificationTime":10},{"id":"230a9454-5a98-42dd-afec-4e90e25cd5e7","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"c310650a-fce0-4b68-9a3f-60d37c467e2a"},"notificationTime":10},{"id":"2cf5ab11-bf2a-482c-b124-e414009ae866","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"e140c531-9ac9-4025-98e2-63890470be46"},"notificationTime":10},{"id":"8be07b5e-db02-432e-aa28-321214c5f020","title":"반복 일정","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"e140c531-9ac9-4025-98e2-63890470be46"},"notificationTime":10},{"id":"41a42b4b-b0f2-413a-b7ea-2e7742622641","title":"반복 회의","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"70425c0d-778c-42fd-ac08-10283ad33087"},"notificationTime":10},{"id":"99bf4653-a126-4576-9020-a30d9d5056e7","title":"반복 회의","date":"2025-10-02","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"70425c0d-778c-42fd-ac08-10283ad33087"},"notificationTime":10},{"id":"076e8653-245c-4576-803c-922d1d412e1c","title":"반복 회의","date":"2025-10-03","startTime":"10:00","endTime":"11:00","description":"매일 반복","location":"회의실 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-03","id":"70425c0d-778c-42fd-ac08-10283ad33087"},"notificationTime":10},{"id":"fa267a3d-3792-4e8b-a12d-4a4d2657f2bd","title":"반복 일정","date":"2025-10-01","startTime":"10:00","endTime":"11:00","description":"반복","location":"장소 A","category":"업무","repeat":{"type":"daily","interval":1,"endDate":"2025-10-02","id":"ac4d21d3-149d-4929-a533-a3c68d9261d8"},"notificationTime":10}]}
+{
+  "events": [
+    {
+      "id": "2b7545a6-ebee-426c-b906-2329bc8d62bd",
+      "title": "팀 회의",
+      "date": "2025-10-20",
+      "startTime": "10:00",
+      "endTime": "11:00",
+      "description": "주간 팀 미팅",
+      "location": "회의실 A",
+      "category": "업무",
+      "repeat": { "type": "none", "interval": 0 },
+      "notificationTime": 1
+    },
+    {
+      "id": "09702fb3-a478-40b3-905e-9ab3c8849dcd",
+      "title": "점심 약속",
+      "date": "2025-10-21",
+      "startTime": "12:30",
+      "endTime": "13:30",
+      "description": "동료와 점심 식사",
+      "location": "회사 근처 식당",
+      "category": "개인",
+      "repeat": { "type": "daily", "interval": 1, "endDate": "2025-10-31" },
+      "notificationTime": 1
+    },
+    {
+      "id": "da3ca408-836a-4d98-b67a-ca389d07552b",
+      "title": "프로젝트 마감",
+      "date": "2025-10-25",
+      "startTime": "09:00",
+      "endTime": "18:00",
+      "description": "분기별 프로젝트 마감",
+      "location": "사무실",
+      "category": "업무",
+      "repeat": { "type": "daily", "interval": 1, "endDate": "2025-10-31" },
+      "notificationTime": 1
+    },
+    {
+      "id": "dac62941-69e5-4ec0-98cc-24c2a79a7f81",
+      "title": "생일 파티",
+      "date": "2025-10-28",
+      "startTime": "19:00",
+      "endTime": "22:00",
+      "description": "친구 생일 축하",
+      "location": "친구 집",
+      "category": "개인",
+      "repeat": { "type": "none", "interval": 0 },
+      "notificationTime": 1
+    },
+    {
+      "id": "80d85368-b4a4-47b3-b959-25171d49371f",
+      "title": "운동",
+      "date": "2025-10-22",
+      "startTime": "18:00",
+      "endTime": "19:00",
+      "description": "주간 운동",
+      "location": "헬스장",
+      "category": "개인",
+      "repeat": { "type": "none", "interval": 0 },
+      "notificationTime": 1
+    },
+    {
+      "id": "70841fc4-f31c-4cf6-8682-c162e29a7ebf",
+      "title": "일저어엉2",
+      "date": "2025-10-01",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "52133bae-cab1-4c70-8662-a24bac46ee0c",
+      "title": "일저어엉2",
+      "date": "2025-10-02",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "accc3be6-eea7-4b45-8b3d-3fb1a115aaa6",
+      "title": "일저어엉2",
+      "date": "2025-10-03",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "99153953-55a7-4a1f-a41b-f83e8ce677ab",
+      "title": "일저어엉2",
+      "date": "2025-10-04",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "53cc25e9-4fa5-4750-a160-085f8e1162cc",
+      "title": "일저어엉2",
+      "date": "2025-10-05",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "e72da789-65ef-43bb-b4d3-e86619bfd892",
+      "title": "일저어엉2",
+      "date": "2025-10-06",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "4a71e225-b80a-48c6-af8a-80069c15a238",
+      "title": "일저어엉2",
+      "date": "2025-10-07",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "b4db87a6-b3ba-415f-93df-e0206c1d5b43",
+      "title": "일저어엉2",
+      "date": "2025-10-08",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "b57fd6ff-b271-4f6e-b9da-2b1c972c7f79",
+      "title": "일저어엉2",
+      "date": "2025-10-09",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "1b148f70-5aaa-4746-a88f-202c363ef68f",
+      "title": "일저어엉2",
+      "date": "2025-10-10",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "ec6b369f-0e27-4798-a4b0-4af04c41dbf4",
+      "title": "일저어엉2",
+      "date": "2025-10-11",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "43d93821-7094-4897-a9e7-30a0a8ab67fe",
+      "title": "일저어엉2",
+      "date": "2025-10-12",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "f5e60f54-72d4-4c15-a18d-8cad2f3c1e8a",
+      "title": "일저어엉1",
+      "date": "2025-10-13",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": { "type": "none", "interval": 1, "endDate": "2025-12-31" },
+      "notificationTime": 1
+    },
+    {
+      "id": "c95bbbb2-0724-4629-a3e8-be0f7e9025e0",
+      "title": "일저어엉2",
+      "date": "2025-10-14",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "7bb5fa4e-52b8-4613-8c4f-9ba50ad1c491",
+      "title": "일저어엉2",
+      "date": "2025-10-15",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "d1c23739-4d67-4f44-a250-60dceea78d21",
+      "title": "일저어엉2",
+      "date": "2025-10-16",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "570de0a6-31b5-4dc0-9bea-c736bc647845",
+      "title": "일저어엉2",
+      "date": "2025-10-17",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "7891cda6-4101-44b4-b5c9-ebd18c0193c8",
+      "title": "일저어엉2",
+      "date": "2025-10-18",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "d15093b4-7ba9-4a55-a380-31de75dab4ac",
+      "title": "일저어엉2",
+      "date": "2025-10-19",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "4cbd916c-a73e-4348-beec-2c01ec916ef1",
+      "title": "일저어엉2",
+      "date": "2025-10-20",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "e167358a-00a6-4c12-979d-0adc889afc9d",
+      "title": "일저어엉2",
+      "date": "2025-10-21",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "4db73bc9-adb6-4dd2-bb06-4633b2080270",
+      "title": "일저어엉2",
+      "date": "2025-10-22",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "385301a8-77aa-4012-82f2-4b7929f3078b",
+      "title": "일저어엉2",
+      "date": "2025-10-23",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "24f4235c-c4bf-495f-a4ca-3e39c431225f",
+      "title": "일저어엉2",
+      "date": "2025-10-24",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "2c3ab851-7469-434f-bc38-f2d5efb42e60",
+      "title": "일저어엉2",
+      "date": "2025-10-25",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "03f14990-2fd1-4e74-b45e-533b9366970e",
+      "title": "일저어엉2",
+      "date": "2025-10-26",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "0bd7b1d0-a61f-46c2-aad4-e557b045713b",
+      "title": "일저어엉2",
+      "date": "2025-10-27",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "abdc7f3c-08d9-4dd3-be81-5d462cecc14a",
+      "title": "일저어엉2",
+      "date": "2025-10-28",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "4841d487-f8c3-46c5-9d85-e07d4a31a9c0",
+      "title": "일저어엉2",
+      "date": "2025-10-29",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "27d71d13-4318-4765-89dd-fda6ed5c1961",
+      "title": "일저어엉2",
+      "date": "2025-10-30",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    },
+    {
+      "id": "9a4c3a92-225d-4ba0-9329-94ce85e8bd04",
+      "title": "일저어엉2",
+      "date": "2025-10-31",
+      "startTime": "06:09",
+      "endTime": "08:11",
+      "description": "포트폴리오 노션입니다.",
+      "location": "서울",
+      "category": "개인",
+      "repeat": {
+        "type": "daily",
+        "interval": 1,
+        "endDate": "2025-10-31",
+        "id": "4c98cd2f-1e80-4f69-ba68-ca774701fea0"
+      },
+      "notificationTime": 1
+    }
+  ]
+}
